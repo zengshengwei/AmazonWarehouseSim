@@ -15,6 +15,8 @@ function main() {
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   camera.position.set(0, 10, 20);
 
+  const robots = [];
+
   const cameraHelper = new THREE.CameraHelper(camera);
 
   class MinMaxGUIHelper {
@@ -67,6 +69,13 @@ function main() {
   scene.background = new THREE.Color('black');
   scene.add(cameraHelper);
 
+  function addRobot(x, y, obj) {
+    obj.position.x = x;
+    obj.position.y = y;
+
+    scene.add(obj);
+    robots.push(obj);
+  }
   {
     const planeSize = 40;
 
@@ -92,8 +101,9 @@ function main() {
     const cubeGeo = new THREE.BoxBufferGeometry(cubeSize, cubeSize, cubeSize);
     const cubeMat = new THREE.MeshPhongMaterial({color: '#8AC'});
     const mesh = new THREE.Mesh(cubeGeo, cubeMat);
-    mesh.position.set(cubeSize + 1, cubeSize / 2, 0);
-    scene.add(mesh);
+    //mesh.position.set(cubeSize + 1, cubeSize / 2, 0);
+    addRobot(cubeSize + 1, cubeSize / 2, mesh);
+    
   }
   {
     const sphereRadius = 3;
@@ -188,6 +198,10 @@ function main() {
       scene.background.set(0x000040);
 
       renderer.render(scene, camera2);
+    }
+
+    if(robots[0] != null) {
+      robots[0].position.x += 0.05;
     }
 
     requestAnimationFrame(render);
