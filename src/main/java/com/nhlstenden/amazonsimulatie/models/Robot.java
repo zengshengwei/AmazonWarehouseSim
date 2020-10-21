@@ -10,8 +10,6 @@ import java.util.UUID;
 class Robot implements Object3D, Updatable {
     private UUID uuid;
 
-    private THREE.Mesh mesh;
-
     private double x = 0;
     private double y = 0;
     private double z = 0;
@@ -22,16 +20,6 @@ class Robot implements Object3D, Updatable {
 
     public Robot() {
         this.uuid = UUID.randomUUID();
-    }
-
-
-    public THREE.Mesh getMesh() {
-        if(mesh != null)
-            return mesh;
-    }
-
-    public void setMesh(THREE.Mesh mesh) {
-        this.mesh = mesh;
     }
 
     /*
@@ -49,10 +37,10 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        if(mesh.position.x < 15) {
-            this.mesh.x += 0.5;
+        if(x < 15) {
+            this.x += 0.5;
         } else {
-            this.mesh.z += 0.5;
+            this.z += 0.5;
         }
         
         return true;

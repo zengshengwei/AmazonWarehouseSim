@@ -13,8 +13,6 @@
         naar updates vanaf de server over de websocket communicatie.
     -->
     <script>
-        import com.nhlstenden.amazonsimulatie.models.robot;
-
         function parseCommand(input = "") {
             return JSON.parse(input);
         }
@@ -84,11 +82,11 @@
                 var material = new THREE.MeshFaceMaterial(cubeMaterials);
                 mesh = new THREE.Mesh(geometry, material);
 
-                Robot rob = new Robot();
-                rob.setMesh(mesh);
+                //Robot rob = new Robot();
+                //rob.setMesh(mesh);
 
                 var group = new THREE.Group();
-                group.add(rob.getMesh()); // scene rendered een mesh, kijk even wat werkt. als rob als geheel kan worden toegevoegd is dat ook goed.
+                group.add(mesh); // scene rendered een mesh, kijk even wat werkt. als rob als geheel kan worden toegevoegd is dat ook goed.
                 scene.add(group);
             }
 
@@ -111,12 +109,12 @@
                         if (command.parameters.type == "robot") {
                             var geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
                             var cubeMaterials = [
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.SingleSide }), //LEFT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.SingleSide }), //RIGHT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.SingleSide }), //TOP
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.SingleSide }), //BOTTOM
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.SingleSide }), //FRONT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.SingleSide }), //BACK
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
                             ];
                             var material = new THREE.MeshFaceMaterial(cubeMaterials);
                             var robot = new THREE.Mesh(geometry, material);
@@ -150,7 +148,6 @@
         }
     </script>
 
-    <script src="../../java/com/nhlstenden/amazonsimulatie/models/Robot.java"></script>
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
 </body>
