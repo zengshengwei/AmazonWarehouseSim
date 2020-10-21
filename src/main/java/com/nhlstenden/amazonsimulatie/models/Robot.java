@@ -23,30 +23,15 @@ class Robot implements Object3D, Updatable {
     public Robot() {
         this.uuid = UUID.randomUUID();
     }
-    
-    public Robot(x, y, z) {
-        this.uuid = UUID.randomUUID();
 
-        var geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
-        var cubeMaterials = [
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.SingleSide }), //LEFT
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.SingleSide }), //RIGHT
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.SingleSide }), //TOP
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.SingleSide }), //BOTTOM
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.SingleSide }), //FRONT
-            new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.SingleSide }), //BACK
-        ];
-        var material = new THREE.MeshFaceMaterial(cubeMaterials);
-        mesh = new THREE.Mesh(geometry, material);
-
-        mesh.position.x = x;
-        mesh.position.y = y;
-        mesh.position.z = z;
-    }
 
     public THREE.Mesh getMesh() {
         if(mesh != null)
             return mesh;
+    }
+
+    public void setMesh(THREE.Mesh mesh) {
+        this.mesh = mesh;
     }
 
     /*
@@ -64,10 +49,10 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        if(x < 15) {
-            this.x += 0.5;
+        if(mesh.position.x < 15) {
+            this.mesh.x += 0.5;
         } else {
-            this.z += 0.5;
+            this.mesh.z += 0.5;
         }
         
         return true;
