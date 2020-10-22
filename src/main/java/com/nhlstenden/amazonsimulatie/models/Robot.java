@@ -1,5 +1,7 @@
 package com.nhlstenden.amazonsimulatie.models;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /*
@@ -37,10 +39,42 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        x = Math.sin((double)System.currentTimeMillis() / 1000f) + 5;
-        z = Math.cos((double)System.currentTimeMillis() / 1000f) + 5;
-        
+        //x = Math.sin((double)System.currentTimeMillis() / 1000f) + 5;
+        //z = Math.cos((double)System.currentTimeMillis() / 1000f) + 5;
+
+        int[] cordsX = {13, 10, 15, 13};
+        int[] cordsZ = {30, 20, 25, 12};
+
+        x = 10;
+        z = 25;
+        GoToVector2(x, z);
+
         return true;
+    }
+
+    public void GoToVector2(double x, double z){
+        ArrayList<Double> curPost = new ArrayList<Double>();
+        curPost.add(this.x);
+        curPost.add(this.z);
+        
+        double xSpeed = (x - this.x) / 1;
+        double zSpeed = (z - this.z) / 1;
+
+        double factor = 3 / Math.sqrt(xSpeed * xSpeed + zSpeed * zSpeed);
+
+        xSpeed *= factor;
+        zSpeed *= factor;
+
+        // float zSpeed = 0;
+        // float xSpeed = 0;
+
+        // float zFactor = zSpeed * (float) (2.5 / Math.sqrt(xSpeed * xSpeed + zSpeed * zSpeed));
+        // float xFactor = xSpeed * (float) (2.5 / Math.sqrt(xSpeed * xSpeed + zSpeed * zSpeed));
+        
+        // xSpeed *= xFactor;
+        // zSpeed *= zFactor;
+
+        
     }
 
     @Override
