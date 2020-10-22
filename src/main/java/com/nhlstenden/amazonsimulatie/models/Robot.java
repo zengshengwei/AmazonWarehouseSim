@@ -37,11 +37,8 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        if(x < 15) {
-            this.x += 0.5;
-        } else {
-            this.z += 0.5;
-        }
+        x = Math.sin((double)System.currentTimeMillis() / 1000f) + 5;
+        z = Math.cos((double)System.currentTimeMillis() / 1000f) + 5;
         
         return true;
     }
