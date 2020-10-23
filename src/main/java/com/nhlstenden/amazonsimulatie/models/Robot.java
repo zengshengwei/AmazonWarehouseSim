@@ -16,13 +16,24 @@ class Robot implements Object3D, Updatable {
     private double y = 0;
     private double z = 0;
 
+    private ArrayList<Integer> destX = new ArrayList<Integer>();
+    private ArrayList<Integer> destY = new ArrayList<Integer>();
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
     private boolean moving = false;
 
+    private double localDeltaTime;
+    private long last_time = System.nanoTime();
+
+
     public Robot() {
         this.uuid = UUID.randomUUID();
+
+        destX.add(30);
+        destX.add(0);
+        destY.add(30);
+        destY.add(0);
     }
 
     /*
@@ -40,19 +51,15 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        int[] cordsX = {15};
-        int[] cordsZ = {15};
 
-
-        for(int i = 0; i < cordsX.length; i++){
-            GoToVector2(cordsX[i], cordsZ[i]);
-        }
-
+        if(destX.size() != 0 && destY.size() != 0)
+            GoToVector2(destX.get(0), destY.get(0));
+        
         return true;
     }
 
     public void GoToVector2(double x, double z){
-        double speed = 30;
+        double speed = 250;
         double elapsed = 0.01f;
         double startX, startZ;
 
@@ -64,15 +71,24 @@ class Robot implements Object3D, Updatable {
         moving = true;
 
         if (moving == true){
-        this.x += dirX * speed * elapsed;
-        this.z += dirZ * speed * elapsed;
+        this.x += dirX * speed * elapsed * localDeltaTime;
+        this.z += dirZ * speed * elapsed * localDeltaTime;
         
             if(Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance){
                 this.x = x;
                 this.z = z;
                 moving = false;
+                destX.remove(0);
+                destY.remove(0);
             }
         }
+    }
+
+    public void calcDeltaTime() {
+        long time = System.nanoTime();
+        localDeltaTime = ((time - last_time) / 1000000);
+        localDeltaTime /= 1000;
+        last_time = time;
     }
 
     @Override
