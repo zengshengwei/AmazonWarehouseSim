@@ -19,6 +19,7 @@ class Robot implements Object3D, Updatable {
     private double rotationX = 0;
     private double rotationY = 0;
     private double rotationZ = 0;
+    private boolean moving = false;
 
     public Robot() {
         this.uuid = UUID.randomUUID();
@@ -39,8 +40,8 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        int[] cordsX = {13, 10, 15, 13};
-        int[] cordsZ = {30, 20, 25, 12};
+        int[] cordsX = {30};
+        int[] cordsZ = {30};
 
 
         for(int i = 0; i < cordsX.length; i++){
@@ -53,13 +54,40 @@ class Robot implements Object3D, Updatable {
     }
 
     public void GoToVector2(double x, double z){
-        double xSpeed = (x - this.x) / 1;
-        double zSpeed = (z - this.z) / 1;
+        // double xSpeed = (x - this.x) / 3;
+        // double zSpeed = (z - this.z) / 3;
 
-        double factor = 3 / Math.sqrt(xSpeed * xSpeed + zSpeed * zSpeed);
+        // double factor = 3 / Math.sqrt(xSpeed * xSpeed + zSpeed * zSpeed);
 
-        xSpeed *= factor;
-        zSpeed *= factor; 
+        // xSpeed *= factor;
+        // zSpeed *= factor; 
+
+        // if(moving == true){
+        //     this.x += xSpeed;
+        //     this.z += zSpeed;
+        // }
+
+        double speed = 100;
+        double elapsed = 0.01f;
+        double startX, startZ;
+
+        double distance = Math.sqrt(Math.pow(x-this.x,2)+Math.pow(z-this.z,2));
+        double dirX = (x-this.x) / distance;
+        double dirZ = (x=this.x) / distance;
+        startX = this.x;
+        startZ = this.z;
+        moving = true;
+
+        if (moving == true){
+        this.x += dirX * speed * elapsed;
+        this.z += dirZ * speed * elapsed;
+        
+        if(Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance){
+                this.x = x;
+                this.z = z;
+                moving = false;
+            }
+        }
     }
 
     @Override
