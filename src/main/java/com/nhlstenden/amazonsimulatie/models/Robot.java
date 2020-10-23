@@ -30,10 +30,10 @@ class Robot implements Object3D, Updatable {
     public Robot() {
         this.uuid = UUID.randomUUID();
 
-        destX.add(30);
-        destX.add(0);
-        destY.add(30);
-        destY.add(0);
+        destX.add(15);
+        destX.add(-15);
+        destY.add(15);
+        destY.add(-15);
     }
 
     /*
@@ -51,6 +51,7 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
+        calcDeltaTime();
 
         if(destX.size() != 0 && destY.size() != 0)
             GoToVector2(destX.get(0), destY.get(0));
