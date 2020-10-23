@@ -45,8 +45,6 @@ class Robot implements Object3D, Updatable {
 
 
         for(int i = 0; i < cordsX.length; i++){
-            //x = cordsX[i];
-            //z = cordsZ[i];
             GoToVector2(cordsX[i], cordsZ[i]);
         }
 
@@ -54,26 +52,13 @@ class Robot implements Object3D, Updatable {
     }
 
     public void GoToVector2(double x, double z){
-        // double xSpeed = (x - this.x) / 3;
-        // double zSpeed = (z - this.z) / 3;
-
-        // double factor = 3 / Math.sqrt(xSpeed * xSpeed + zSpeed * zSpeed);
-
-        // xSpeed *= factor;
-        // zSpeed *= factor; 
-
-        // if(moving == true){
-        //     this.x += xSpeed;
-        //     this.z += zSpeed;
-        // }
-
-        double speed = 100;
+        double speed = 10;
         double elapsed = 0.01f;
         double startX, startZ;
 
         double distance = Math.sqrt(Math.pow(x-this.x,2)+Math.pow(z-this.z,2));
-        double dirX = (x-this.x) / distance;
-        double dirZ = (x=this.x) / distance;
+        double dirX = (x - this.x) / distance;
+        double dirZ = (z - this.z) / distance;
         startX = this.x;
         startZ = this.z;
         moving = true;
@@ -82,7 +67,7 @@ class Robot implements Object3D, Updatable {
         this.x += dirX * speed * elapsed;
         this.z += dirZ * speed * elapsed;
         
-        if(Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance){
+            if(Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance){
                 this.x = x;
                 this.z = z;
                 moving = false;
