@@ -40,8 +40,8 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        int[] cordsX = {30};
-        int[] cordsZ = {30};
+        int[] cordsX = {15};
+        int[] cordsZ = {15};
 
 
         for(int i = 0; i < cordsX.length; i++){
@@ -52,7 +52,7 @@ class Robot implements Object3D, Updatable {
     }
 
     public void GoToVector2(double x, double z){
-        double speed = 10;
+        double speed = 30;
         double elapsed = 0.01f;
         double startX, startZ;
 
