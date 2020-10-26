@@ -108,7 +108,8 @@
                             worldObjects[command.parameters.uuid] = group;
                         }
                         if(command.parameters.type == "plane") {
-                            var material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, side: THREE.DoubleSide });
+                            var texture = new THREE.TextureLoader().load('textures/rocks.png');
+                            var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
                             var geometry = new THREE.PlaneGeometry(10, 10, 32);
                             var plane = new THREE.Mesh(geometry, material);
                             plane.rotation.x = Math.PI / 2.0;
