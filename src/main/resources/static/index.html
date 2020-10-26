@@ -43,8 +43,6 @@
                 light.intensity = 4;
                 scene.add(light);
 
-                createGrid(10, 10, 10);
-
                 //loadModel('3Dmodels/Truck_1359.gltf'); // not working rn [says gltf loader is not defined]
 
                 window.addEventListener('resize', onWindowResize, false);
@@ -59,36 +57,6 @@
                     const root = gltf.scene;
                     scene.add(root);
                 })
-            }
-            
-            function createGrid(sizex, sizez, planesize) {
-                var colorx;
-                var tacross, tdown;
-                for(tacross = 0; tacross < sizex; tacross++){
-                    for(tdown = 0; tdown < sizez; tdown++) {
-                        if(tdown % 2 == 0) {
-                            if(tacross % 2 == 0) {
-                                colorx = 0xffffff;
-                            }
-                            else {
-                                colorx = 0x5D99D4;
-                            }
-                        }else {
-                            if(tacross % 2 == 0) {
-                                colorx = 0x5D99D4;
-                            } else {
-                                colorx = 0xffffff;
-                            }
-                        }
-                        var material = new THREE.MeshBasicMaterial({ color: colorx, side: THREE.DoubleSide });
-                        var geometry = new THREE.PlaneGeometry(planesize, planesize, 32);
-                        var plane = new THREE.Mesh(geometry, material);
-                        plane.rotation.x = Math.PI / 2.0;
-                        plane.position.x = tacross * planesize;
-                        plane.position.z = tdown * planesize;
-                        scene.add(plane);
-                    }
-                }
             }
 
             function onWindowResize() {
@@ -139,7 +107,20 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
+                        if(command.parameters.type == "plane") {
+                            var material = new THREE.MeshBasicMaterial({ color: 0xFFFFF, side: THREE.DoubleSide });
+                            var geometry = new THREE.PlaneGeometry(10, 10, 32);
+                            var plane = new THREE.Mesh(geometry, material);
+                            plane.rotation.x = Math.PI / 2.0;
+
+                            var group = new THREE.Group();
+                            group.add(plane);
+
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
+                        }
                     }
+
 
                     /*
                      * Deze code wordt elke update uitgevoerd. Het update alle positiegegevens van het 3D object.
@@ -163,7 +144,7 @@
 
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
-    <script src="https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/loaders/GLTFLoader.js"></script>
+    <!--<script src="https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/loaders/GLTFLoader.js"></script>-->
 </body>
 
 </html>
