@@ -39,19 +39,45 @@
                 renderer.setSize(window.innerWidth, window.innerHeight + 5);
                 document.body.appendChild(renderer.domElement);
 
-                window.addEventListener('resize', onWindowResize, false);
-
-                var geometry = new THREE.PlaneGeometry(30, 30, 32);
-                var material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
-                var plane = new THREE.Mesh(geometry, material);
-                plane.rotation.x = Math.PI / 2.0;
-                plane.position.x = 0;
-                plane.position.z = 0;
-                scene.add(plane);
-
                 var light = new THREE.AmbientLight(0x404040);
                 light.intensity = 4;
                 scene.add(light);
+
+                createGrid(10, 10, 10);
+
+                window.addEventListener('resize', onWindowResize, false);
+
+                
+            }
+            
+            function createGrid(sizex, sizez, planesize) {
+                var colorx;
+                var tacross, tdown;
+                for(tacross = 0; tacross < sizex; tacross++){
+                    for(tdown = 0; tdown < sizez; tdown++) {
+                        if(tdown % 2 == 0) {
+                            if(tacross % 2 == 0) {
+                                colorx = 0xffffff;
+                            }
+                            else {
+                                colorx = 0x5D99D4;
+                            }
+                        }else {
+                            if(tacross % 2 == 0) {
+                                colorx = 0x5D99D4;
+                            } else {
+                                colorx = 0xffffff;
+                            }
+                        }
+                        var material = new THREE.MeshBasicMaterial({ color: colorx, side: THREE.DoubleSide });
+                        var geometry = new THREE.PlaneGeometry(planesize, planesize, 32);
+                        var plane = new THREE.Mesh(geometry, material);
+                        plane.rotation.x = Math.PI / 2.0;
+                        plane.position.x = tacross * planesize;
+                        plane.position.z = tdown * planesize;
+                        scene.add(plane);
+                    }
+                }
             }
 
             function onWindowResize() {

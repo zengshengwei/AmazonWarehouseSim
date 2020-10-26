@@ -30,10 +30,8 @@ class Robot implements Object3D, Updatable {
     public Robot() {
         this.uuid = UUID.randomUUID();
 
-        destX.add(15);
-        destX.add(-15);
-        destY.add(15);
-        destY.add(-15);
+        GoToAdd(15, 15);
+        GoToAdd(-15, -15);
     }
 
     /*
