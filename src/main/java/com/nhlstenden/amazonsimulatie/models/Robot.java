@@ -59,6 +59,11 @@ class Robot implements Object3D, Updatable {
         return true;
     }
 
+    public void GoToAdd(int x, int y) {
+        destX.add(x);
+        destY.add(y);
+    }
+
     public void GoToVector2(double x, double z){
         double speed = 250;
         double elapsed = 0.01f;
