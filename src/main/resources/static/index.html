@@ -45,9 +45,20 @@
 
                 createGrid(10, 10, 10);
 
+                //loadModel('3Dmodels/Truck_1359.gltf'); // not working rn [says gltf loader is not defined]
+
                 window.addEventListener('resize', onWindowResize, false);
 
                 
+            }
+
+            function loadModel(root) {
+                const gltfLoader = new THREE.gltfLoader();
+                const url = root;
+                gltfLoader.load(url, (gltf) => {
+                    const root = gltf.scene;
+                    scene.add(root);
+                })
             }
             
             function createGrid(sizex, sizez, planesize) {
@@ -152,6 +163,7 @@
 
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
+    <script src="https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/loaders/GLTFLoader.js"></script>
 </body>
 
 </html>
