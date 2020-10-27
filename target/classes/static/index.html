@@ -47,8 +47,13 @@
                 light.intensity = 4;
                 scene.add(light);
 
-                //loadModel('3Dmodels/Truck_1359.gltf'); // not working rn [says gltf loader is not defined]
-                gltfLoader.load('3Dmodels/Truck_1359.gltf', function (gltf) {
+                loadModel('3Dmodels/Truck.gltf')
+
+                window.addEventListener('resize', onWindowResize, false);
+            }
+
+            function loadModel(root) {
+                gltfLoader.load(root, function (gltf) {
                     truck = gltf.scene.children[0];
                     truck.scale.set(0.5,0.5,0.5); 
                     truck.rotation.y = Math.PI / 1.0;                          
@@ -57,22 +62,6 @@
                     scene.add(gltf.scene);
                     animate();
                 });
-
-
-                worldObjects[command.parameters.uuid] = group;
-
-                window.addEventListener('resize', onWindowResize, false);
-
-                
-            }
-
-            function loadModel(root) {
-                const gltfLoader = new THREE.gltfLoader();
-                const url = root;
-                gltfLoader.load(url, (gltf) => {
-                    const root = gltf.scene;
-                    scene.add(root);
-                })
             }
 
             function onWindowResize() {
