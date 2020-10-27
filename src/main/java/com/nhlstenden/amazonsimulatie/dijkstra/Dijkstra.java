@@ -1,4 +1,4 @@
-package com.dijkstra;
+package com.nhlstenden.amazonsimulatie.dijkstra;
 
 import java.util.*; 
 class Graph_pq { 
