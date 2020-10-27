@@ -22,6 +22,7 @@
         window.onload = function () {
             var camera, scene, renderer;
             var cameraControls;
+            let gltfLoader;
 
             var worldObjects = {};
 
@@ -34,6 +35,9 @@
                 cameraControls.update();
                 scene = new THREE.Scene();
 
+                gltfLoader = new THREE.GLTFLoader();
+                gltfLoader.setPath();
+
                 renderer = new THREE.WebGLRenderer({ antialias: true });
                 renderer.setPixelRatio(window.devicePixelRatio);
                 renderer.setSize(window.innerWidth, window.innerHeight + 5);
@@ -44,6 +48,18 @@
                 scene.add(light);
 
                 //loadModel('3Dmodels/Truck_1359.gltf'); // not working rn [says gltf loader is not defined]
+                gltfLoader.load('3Dmodels/Truck_1359.gltf', function (gltf) {
+                    truck = gltf.scene.children[0];
+                    truck.scale.set(0.5,0.5,0.5); 
+                    truck.rotation.y = Math.PI / 1.0;                          
+                    truck.position.x = 5;
+                    truck.position.z = 15;
+                    scene.add(gltf.scene);
+                    animate();
+                });
+
+
+                worldObjects[command.parameters.uuid] = group;
 
                 window.addEventListener('resize', onWindowResize, false);
 
@@ -145,7 +161,7 @@
 
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
-    <!--<script src="https://threejsfundamentals.org/threejs/resources/threejs/r119/examples/jsm/loaders/GLTFLoader.js"></script>-->
+    <script src="GLTFLoader.js"></script>
 </body>
 
 </html>
