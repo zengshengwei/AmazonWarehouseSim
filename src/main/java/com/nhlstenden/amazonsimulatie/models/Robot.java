@@ -98,31 +98,31 @@ class Robot implements Object3D, Updatable {
     //     destY.add(y);
     // }
 
-    // public void GoToVector2(double x, double z) {
-    //     double speed = 250;
-    //     double elapsed = 0.01f;
-    //     double startX, startZ;
+    public void GoToVector2(double x, double z) {
+        double speed = 250;
+        double elapsed = 0.01f;
+        double startX, startZ;
 
-    //     double distance = Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(z - this.z, 2));
-    //     double dirX = (x - this.x) / distance;
-    //     double dirZ = (z - this.z) / distance;
-    //     startX = this.x;
-    //     startZ = this.z;
-    //     moving = true;
+        double distance = Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(z - this.z, 2));
+        double dirX = (x - this.x) / distance;
+        double dirZ = (z - this.z) / distance;
+        startX = this.x;
+        startZ = this.z;
+        moving = true;
 
-    //     if (moving == true) {
-    //         this.x += dirX * speed * elapsed * localDeltaTime;
-    //         this.z += dirZ * speed * elapsed * localDeltaTime;
+        if (moving == true) {
+            this.x += dirX * speed * elapsed * localDeltaTime;
+            this.z += dirZ * speed * elapsed * localDeltaTime;
 
-    //         if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
-    //             this.x = x;
-    //             this.z = z;
-    //             moving = false;
-    //             destX.remove(0);
-    //             destY.remove(0);
-    //         }
-    //     }
-    // }
+            if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
+                this.x = x;
+                this.z = z;
+                moving = false;
+                destX.remove(0);
+                destY.remove(0);
+            }
+        }
+    }
 
     public void calcDeltaTime() {
         long time = System.nanoTime();
