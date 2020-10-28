@@ -25,8 +25,6 @@ class Robot implements Object3D, Updatable {
     private double rotationZ = 0;
     private boolean moving = false;
 
-    private Graph graph;
-    private List<Node> nodes;
     private double speed = 0.5;
     private int nodeCounter = 0;
 
@@ -34,15 +32,11 @@ class Robot implements Object3D, Updatable {
     private double localDeltaTime;
     private long last_time = System.nanoTime();
 
-    public Robot(Graph graph) {
+    public Robot() {
         this.uuid = UUID.randomUUID();
-        this.graph = graph;
-        x = graph.getNodeByName("Source").getX();
-        z = graph.getNodeByName("Source").getZ();
-        this.nodes = graph.getGraph();
 
-        // GoToAdd(15, 15);
-        // GoToAdd(-15, -15);
+        GoToAdd(15, 15);
+        GoToAdd(-15, -15);
     }
 
     /*
@@ -61,42 +55,16 @@ class Robot implements Object3D, Updatable {
     public boolean update() {
         calcDeltaTime();
 
-        if(x != nodes.get(nodeCounter).getX()){
-            if (x < nodes.get(nodeCounter).getX()){
-                x += speed;
-            } else{
-                x -= speed;
-            }
-        }
-
-        if(z != nodes.get(nodeCounter).getZ()){
-            if (z < nodes.get(nodeCounter).getZ()){
-                z += speed;
-            } else{
-                z -= speed;
-            }
-        }
-
-        if(x == nodes.get(nodeCounter).getX() && z == nodes.get(nodeCounter).getZ()){
-            nodeCounter++;
-        }
-
-        if(x == nodes.get(nodes.size()-1).getX() && z == nodes.get(nodes.size()-1).getZ()){
-            nodeCounter = 0;
-            x = nodes.get(0).getX();
-            z = nodes.get(0).getZ();
-        }
-
-        // if (destX.size() != 0 && destY.size() != 0)
-        //     GoToVector2(destX.get(0), destY.get(0));
+        if (destX.size() != 0 && destY.size() != 0)
+            GoToVector2(destX.get(0), destY.get(0));
 
         return true;
     }
 
-    // public void GoToAdd(int x, int y) {
-    //     destX.add(x);
-    //     destY.add(y);
-    // }
+    public void GoToAdd(int x, int y) {
+        destX.add(x);
+        destY.add(y);
+    }
 
     public void GoToVector2(double x, double z) {
         double speed = 250;

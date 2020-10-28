@@ -27,21 +27,16 @@ public class World implements Model {
      * Het systeem werkt al as-is, dus dit hoeft niet aangepast te worden.
      */
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private Graph graph;
-    List<Node> nodes = new ArrayList<>();
 
     /*
      * De wereld maakt een lege lijst voor worldObjects aan. Daarin wordt nu één robot gestopt.
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
      */
     public World() {
-        graph = new Graph();
         this.worldObjects = new ArrayList<>();
-        BuildGraph();
-        initGraph();
-        this.worldObjects.add(new Robot(graph));
-        this.worldObjects.add(new Robot(graph));
-
+        
+        this.worldObjects.add(new Robot());
+        this.worldObjects.add(new Robot());
         CreateGrid(10, 10, 10);
     }
 
@@ -67,76 +62,6 @@ public class World implements Model {
         }
     }
 
-    public void initGraph(){
-
-        for (Node n: nodes){
-            graph.addMap(n);
-        }
-
-        int columnCounter = 1;
-        int rowCounter = 1;
-        int nodeCounter= 0;
-        final int down = 9;
-        final int right = 1;
-
-        for(Node n: nodes){   
-            
-                boolean actionPerformed = false;
-
-                if((columnCounter < 9 && rowCounter < 5) && !actionPerformed){
-                    graph.addEdge(new Edge(graph.getNodeByIndex(n.getIndex()), graph.getNodeByIndex((n.getIndex() + right)), 1));
-                    graph.addEdge(new Edge(graph.getNodeByIndex(n.getIndex()), graph.getNodeByIndex((n.getIndex() + down)), 1));
-                    System.out.print("Rechts & Onder " + columnCounter + " " + rowCounter + " ");
-                    columnCounter++;
-                    System.out.print("Updated: " + columnCounter + " " + rowCounter + " ");
-                    actionPerformed = true;
-                }
-
-                if(columnCounter == 9 && rowCounter < 5 && !actionPerformed){
-                    graph.addEdge(new Edge(graph.getNodeByIndex(n.getIndex()),graph.getNodeByIndex(n.getIndex() + down), 1));
-                    System.out.print("Onder " + columnCounter + " " + rowCounter + " ");
-                    columnCounter = 1;
-                    rowCounter++;
-                    actionPerformed = true;
-                }
-
-                if(rowCounter == 5 && columnCounter < 9 && !actionPerformed){
-                    graph.addEdge(new Edge(graph.getNodeByIndex(n.getIndex()),graph.getNodeByIndex(n.getIndex() + right), 1));
-                    System.out.print("Rechts " + columnCounter + " " + rowCounter + " ");
-                    columnCounter++;
-                    actionPerformed = true;
-                }  
-            System.out.println("Node " + nodeCounter);   
-                nodeCounter++;
-        }
-
-    }    
-
-
-
-    private void BuildGraph(){
-        final int rowSize = 5;
-        final int colSize = 5; 
-        final int rowSpacing = 3;
-        final int colSpacing = 3;
-        final int offset = 5;
-        final int nodeVal = 1;
-        final int sourceNode = 40;
-        int counter = 0;
-
-        for(int i = 0; i < rowSize; i++){
-            for(int j = 0; j< colSize; j++){
-                if(counter == sourceNode){
-                    nodes.add(new Node("Source", counter, i*rowSpacing + offset, j*colSpacing + offset, nodeVal));
-                    counter++;
-                }
-                else{
-                    nodes.add(new Node("Node", counter,i*rowSpacing + offset, j*colSpacing + offset, nodeVal));
-                    counter++;
-                }
-            }
-        }
-    }
  
     /*
      * Deze methode wordt gebruikt om de wereld te updaten. Wanneer deze methode wordt aangeroepen,

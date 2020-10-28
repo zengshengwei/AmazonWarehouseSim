@@ -1,48 +1,37 @@
-// package com.nhlstenden.amazonsimulatie.dijkstra;
+package com.nhlstenden.amazonsimulatie.dijkstra;
 
-// import java.util.*;
+import java.util.*;
 
-// public class Node { 
-//     public String name; 
-//     public int x;
-//     public int z;
-//     public int weight; 
-//     private Map<Node, Integer> connectedNodes = new HashMap<>();
-//     public int index;
-   
-//     public Node(String name, int index, int x, int z, int weight) { 
-//         this.name = name; 
-//         this.index = index;
-//         this.x = x;
-//         this.z = z;
-//         this.weight = weight; 
-//     } 
-    
-//     public int getIndex(){
-//         return index;
-//     }
+class Node implements Comparable<Node>{
+	
+	private boolean isStellage = false;
 
-//     public String getName(){
-//         return name;
-//     }
+	public int x, z;
 
-//     public int getWeight(){
-//         return weight;
-//     }
+	public final String weight;
+	public Edge[] adjacencies;
+	public double shortestDistance = Double.POSITIVE_INFINITY;
+	public Node parent;
 
-//     public int getX(){
-//         return x;
-//     }
+	public Node(String weight){
+		this.weight = weight;
+	}
 
-//     public int getZ(){
-//         return z;
-//     }
+	public Node(String weight, boolean isstellage){
+		this.weight = weight;
+		this.isStellage = isstellage;
+	}
 
-//     public Map<Node, Integer> getConnectedNodes(){
-//         return connectedNodes;
-//     }
+	public boolean getIsStellage() {
+		return isStellage;
+	}
 
-//     public void addConnectedNodes(Node connectedNode, int weight){
-//         connectedNodes.put(connectedNode, weight);
-//     }
-// }
+	public String toString(){
+			return weight;
+	}
+
+	public int compareTo(Node other){
+		return Double.compare(shortestDistance, other.shortestDistance);
+	}
+
+}
