@@ -2,7 +2,7 @@ package com.nhlstenden.amazonsimulatie.dijkstra;
 
 import java.util.*;
 
-class Node implements Comparable<Node>{
+public class Node implements Comparable<Node>{
 	
 	private boolean isStellage = false;
 

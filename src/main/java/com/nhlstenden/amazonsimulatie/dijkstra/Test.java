@@ -9,10 +9,10 @@ public class Test {
 	 *
 	 */
 
-	private static ArrayList<Node> nodeList = new ArrayList<Node>();
-	private static int gridsizeX, gridsizeZ;
+	private ArrayList<Node> nodeList = new ArrayList<Node>();
+	private int gridsizeX, gridsizeZ;
 
-	public static void computePaths(Node source) {
+	public void computePaths(Node source) {
 		source.shortestDistance = 0;
 
 		// implement a priority queue
@@ -49,11 +49,11 @@ public class Test {
 		}
 	}
 
-	public static List<Node> getNodeList() {
+	public List<Node> getNodeList() {
 		return nodeList;
 	}
 
-	public static List<Node> getShortestPathTo(Node target) {
+	public List<Node> getShortestPathTo(Node target) {
 
 		// trace path from target to source
 		List<Node> path = new ArrayList<Node>();
@@ -67,12 +67,13 @@ public class Test {
 		return path;
 	}
 
-	public static void main(String[] args) {
+	public void main(String[] args) {
 
 		CreateNodes(5, 5);
 		assignEdges();
 
 		// do computepath here
+		computePaths(nodeList.get(1));
 
 		// print shortest paths
 		/*
@@ -81,12 +82,12 @@ public class Test {
 		 * System.out.println("Path: " + path); }
 		 */
 
-		List<Node> path = getShortestPathTo(nodeList.get(2));
+		List<Node> path = getShortestPathTo(nodeList.get(14));
 		System.out.println("Path: " + path);
 
 	}
 
-	public static void CreateNodes(int x, int z) {
+	public void CreateNodes(int x, int z) {
 		gridsizeX = x;
 		gridsizeZ = z;
 
@@ -100,7 +101,7 @@ public class Test {
 		}
 	}
 
-	public static void assignEdges() {
+	public void assignEdges() {
 		if (nodeList.size() > 0) {
 			for (Node n : nodeList) {
 				int index = nodeList.indexOf(n); // get index

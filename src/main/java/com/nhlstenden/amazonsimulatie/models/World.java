@@ -27,7 +27,7 @@ public class World implements Model {
      * Het systeem werkt al as-is, dus dit hoeft niet aangepast te worden.
      */
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-
+    private static ArrayList<Node> nodeList = new ArrayList<Node>();
     /*
      * De wereld maakt een lege lijst voor worldObjects aan. Daarin wordt nu één robot gestopt.
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
@@ -38,6 +38,24 @@ public class World implements Model {
         this.worldObjects.add(new Robot());
         this.worldObjects.add(new Robot());
         CreateGrid(10, 10, 10);
+
+        Test test = new Test();
+        test.CreateNodes(5, 5);
+		test.assignEdges();
+
+		// do computepath here
+		test.computePaths(nodeList.get(1));
+
+		// print shortest paths
+		/*
+		 * for(Node n: nodes){ System.out.println("Distance to " + n + ": " +
+		 * n.shortestDistance); List<Node> path = getShortestPathTo(n);
+		 * System.out.println("Path: " + path); }
+		 */
+
+		List<Node> path = test.getShortestPathTo(nodeList.get(14));
+		System.out.println("Path: " + path);
+
     }
 
     public void CreateGrid(int width, int height, int tilesize) {
@@ -62,6 +80,8 @@ public class World implements Model {
         }
     }
 
+    // Hier moet een grid met nodes komen. Die wordt doorgestuurd
+    // naar de robots.
  
     /*
      * Deze methode wordt gebruikt om de wereld te updaten. Wanneer deze methode wordt aangeroepen,
