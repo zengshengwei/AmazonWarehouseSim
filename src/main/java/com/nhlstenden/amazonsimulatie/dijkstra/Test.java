@@ -41,7 +41,6 @@ public class Test {
 					 */
 					queue.remove(v);
 					v.shortestDistance = distanceFromU;
-					v.parent = u;
 					queue.add(v);
 
 				}
@@ -60,6 +59,11 @@ public class Test {
 		for (Node node = target; node != null; node = node.parent) {
 			path.add(node);
 		}
+
+		
+
+		//adj -> node
+		// edge array.
 
 		// reverse the order such that it will be from source to target
 		Collections.reverse(path);
@@ -91,7 +95,7 @@ public class Test {
 				// if within boundary
 				if (n.x < gridsizeX - 1 && n.z < gridsizeZ - 1) {
 					n.adjacencies = new Edge[] { new Edge(nodelist.get(index + 1), 1), // get right neighbour
-							new Edge(nodelist.get(index + gridsizeX - 1), 1) // get bottom neighbour
+							new Edge(nodelist.get(index + gridsizeX), 1) // get bottom neighbour
 					};
 					if (n.x > 0) { // if there is node to the left
 						n.adjacencies = new Edge[] { new Edge(nodelist.get(index - 1), 1) // get left neighbour
