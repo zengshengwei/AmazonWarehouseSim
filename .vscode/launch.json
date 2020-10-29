@@ -8,16 +8,14 @@
             "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
-            "mainClass": "${file}",
-            "console": "internalConsole"
+            "mainClass": "${file}"
         },
         {
             "type": "java",
             "name": "Debug (Launch)-App<AmazonSimulatie>",
             "request": "launch",
             "mainClass": "com.nhlstenden.amazonsimulatie.base.App",
-            "projectName": "AmazonSimulatie",
-            "console": "internalConsole"
+            "projectName": "AmazonSimulatie"
         }
     ]
 }

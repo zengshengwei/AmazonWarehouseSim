@@ -53,9 +53,9 @@ public class World implements Model {
 		 * System.out.println("Path: " + path); }
 		 */
 
-        List<Node> path = test.getShortestPathTo(nodeList.get(14));
+        List<Node> path = test.getShortestPathTo(nodeList.get(14), nodeList.get(1));
         for (Node n : path) {
-            System.out.println("Path: " + n.x + " | " + n.z + " Weight: " + n.weight);
+            System.out.println("Path: " + n.x + " | " + n.z + " Weight: " + n.shortestDistance);
         }
 
     }

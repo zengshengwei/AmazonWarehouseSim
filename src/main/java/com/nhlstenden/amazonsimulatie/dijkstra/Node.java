@@ -9,7 +9,7 @@ public class Node implements Comparable<Node>{
 	public int x, z;
 
 	public final String weight;
-	public Edge[] adjacencies;
+	public ArrayList<Edge> adjacencies = new ArrayList<Edge>();
 	public double shortestDistance = Double.POSITIVE_INFINITY;
 	public Node parent;
 
@@ -33,5 +33,4 @@ public class Node implements Comparable<Node>{
 	public int compareTo(Node other){
 		return Double.compare(shortestDistance, other.shortestDistance);
 	}
-
 }
