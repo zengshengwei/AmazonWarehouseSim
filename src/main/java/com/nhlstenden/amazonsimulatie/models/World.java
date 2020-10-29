@@ -37,14 +37,14 @@ public class World implements Model {
         
         this.worldObjects.add(new Robot());
         this.worldObjects.add(new Robot());
-        CreateGrid(10, 10, 10);
+        //CreateGrid(10, 10, 10);
 
         Test test = new Test();
-        test.CreateNodes(5, 5);
-		test.assignEdges();
+        test.CreateNodes(5, 5, nodeList);
+		test.assignEdges(nodeList);
 
 		// do computepath here
-		test.computePaths(nodeList.get(1));
+		test.computePaths((Node)nodeList.get(1));
 
 		// print shortest paths
 		/*
@@ -53,8 +53,10 @@ public class World implements Model {
 		 * System.out.println("Path: " + path); }
 		 */
 
-		List<Node> path = test.getShortestPathTo(nodeList.get(14));
-		System.out.println("Path: " + path);
+        List<Node> path = test.getShortestPathTo(nodeList.get(14));
+        for (Node n : path) {
+            System.out.println("Path: " + n.x + " | " + n.z + " Weight: " + n.weight);
+        }
 
     }
 

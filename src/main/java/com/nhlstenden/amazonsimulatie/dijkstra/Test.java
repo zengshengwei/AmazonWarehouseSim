@@ -9,7 +9,7 @@ public class Test {
 	 *
 	 */
 
-	private ArrayList<Node> nodeList = new ArrayList<Node>();
+	private ArrayList<Node> nodeList;
 	private int gridsizeX, gridsizeZ;
 
 	public void computePaths(Node source) {
@@ -67,27 +67,9 @@ public class Test {
 		return path;
 	}
 
-	public void main(String[] args) {
+	public void CreateNodes(int x, int z, ArrayList<Node> nodelist) {
+		this.nodeList = nodelist;
 
-		CreateNodes(5, 5);
-		assignEdges();
-
-		// do computepath here
-		computePaths(nodeList.get(1));
-
-		// print shortest paths
-		/*
-		 * for(Node n: nodes){ System.out.println("Distance to " + n + ": " +
-		 * n.shortestDistance); List<Node> path = getShortestPathTo(n);
-		 * System.out.println("Path: " + path); }
-		 */
-
-		List<Node> path = getShortestPathTo(nodeList.get(14));
-		System.out.println("Path: " + path);
-
-	}
-
-	public void CreateNodes(int x, int z) {
 		gridsizeX = x;
 		gridsizeZ = z;
 
@@ -101,33 +83,33 @@ public class Test {
 		}
 	}
 
-	public void assignEdges() {
-		if (nodeList.size() > 0) {
-			for (Node n : nodeList) {
-				int index = nodeList.indexOf(n); // get index
+	public void assignEdges(ArrayList<Node> nodelist) {
+		if (nodelist.size() > 0) {
+			for (Node n : nodelist) {
+				int index = nodelist.indexOf(n); // get index
 
 				// if within boundary
 				if (n.x < gridsizeX - 1 && n.z < gridsizeZ - 1) {
-					n.adjacencies = new Edge[] { new Edge(nodeList.get(index + 1), 1), // get right neighbour
-							new Edge(nodeList.get(index + gridsizeX - 1), 1) // get bottom neighbour
+					n.adjacencies = new Edge[] { new Edge(nodelist.get(index + 1), 1), // get right neighbour
+							new Edge(nodelist.get(index + gridsizeX - 1), 1) // get bottom neighbour
 					};
 					if (n.x > 0) { // if there is node to the left
-						n.adjacencies = new Edge[] { new Edge(nodeList.get(index - 1), 1) // get left neighbour
+						n.adjacencies = new Edge[] { new Edge(nodelist.get(index - 1), 1) // get left neighbour
 						};
 					}
 					if (n.z > 0) { // if there is node up top
-						n.adjacencies = new Edge[] { new Edge(nodeList.get(index - gridsizeX), 1) // get top neighbour
+						n.adjacencies = new Edge[] { new Edge(nodelist.get(index - gridsizeX), 1) // get top neighbour
 						};
 					}
 
 				} // if x is over boundary
 				else if (n.x >= gridsizeX - 1 && n.z < gridsizeZ - 1 && gridsizeZ > 0) {
-					n.adjacencies = new Edge[] { new Edge(nodeList.get(index + gridsizeX), 1) // get bottom neighbour
+					n.adjacencies = new Edge[] { new Edge(nodelist.get(index + gridsizeX), 1) // get bottom neighbour
 					};
 
 				} // if z is over boundary
 				else if (n.z >= gridsizeZ - 1 && n.x < gridsizeX - 1 && gridsizeX > 0) {
-					n.adjacencies = new Edge[] { new Edge(nodeList.get(index + 1), 1) // get right neighbour
+					n.adjacencies = new Edge[] { new Edge(nodelist.get(index + 1), 1) // get right neighbour
 					};
 
 				} // if x and z are over boundary
