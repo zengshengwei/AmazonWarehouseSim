@@ -2,7 +2,7 @@ package com.nhlstenden.amazonsimulatie.dijkstra;
 
 import java.util.*;
 
-public class Test {
+public class PathManager {
 	/*
 	 * Dijkstra Algorithm
 	 * 
