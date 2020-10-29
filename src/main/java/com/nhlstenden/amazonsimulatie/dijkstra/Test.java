@@ -95,8 +95,8 @@ public class Test {
 			for (int m = 0; m < z; m++) {
 				Node n = new Node(Integer.toString(i));
 				nodeList.add(n);
-				n.x = i;
-				n.z = m;
+				n.x = m;
+				n.z = i;
 			}
 		}
 	}
@@ -107,32 +107,32 @@ public class Test {
 				int index = nodeList.indexOf(n); // get index
 
 				// if within boundary
-				if (n.x < gridsizeX && n.z < gridsizeZ) {
+				if (n.x < gridsizeX - 1 && n.z < gridsizeZ - 1) {
 					n.adjacencies = new Edge[] { new Edge(nodeList.get(index + 1), 1), // get right neighbour
-							new Edge(nodeList.get(index + gridsizeX), 1) // get bottom neighbour
+							new Edge(nodeList.get(index + gridsizeX - 1), 1) // get bottom neighbour
 					};
-					if (n.x > 1) { // if there is node to the left
+					if (n.x > 0) { // if there is node to the left
 						n.adjacencies = new Edge[] { new Edge(nodeList.get(index - 1), 1) // get left neighbour
 						};
 					}
-					if (n.z > 1) { // if there is node up top
+					if (n.z > 0) { // if there is node up top
 						n.adjacencies = new Edge[] { new Edge(nodeList.get(index - gridsizeX), 1) // get top neighbour
 						};
 					}
 
 				} // if x is over boundary
-				else if (n.x >= gridsizeX && n.z < gridsizeZ) {
+				else if (n.x >= gridsizeX - 1 && n.z < gridsizeZ - 1 && gridsizeZ > 0) {
 					n.adjacencies = new Edge[] { new Edge(nodeList.get(index + gridsizeX), 1) // get bottom neighbour
 					};
 
 				} // if z is over boundary
-				else if (n.z >= gridsizeZ && n.x < gridsizeX) {
+				else if (n.z >= gridsizeZ - 1 && n.x < gridsizeX - 1 && gridsizeX > 0) {
 					n.adjacencies = new Edge[] { new Edge(nodeList.get(index + 1), 1) // get right neighbour
 					};
 
 				} // if x and z are over boundary
-				else if (n.x >= gridsizeX && n.z >= gridsizeZ) {
-					n.adjacencies = new Edge[] { new Edge(nodeList.get(index - 1), 1), // get right neighbour
+				else if (n.x >= gridsizeX - 1 && n.z >= gridsizeZ - 1) {
+					n.adjacencies = new Edge[] { new Edge(nodeList.get(index - 1), 1), // get left neighbour
 							new Edge(nodeList.get(index - gridsizeX), 1) // get top neighbour
 					};
 				}
