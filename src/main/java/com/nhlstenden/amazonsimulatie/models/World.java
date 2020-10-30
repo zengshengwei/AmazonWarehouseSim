@@ -36,14 +36,13 @@ public class World implements Model {
     public World() {
         this.worldObjects = new ArrayList<>();
         pm = new PathManager();
-        //CreateGrid(10, 10, 10);
+        CreateGrid(10, 10, 10);
 
         // geef een lengte en breedte mee en een nodelist
         pm.CreateNodes(5, 5, nodeList);
 		pm.assignEdges(nodeList);
 
         // robots krijgen een PathManager mee
-        this.worldObjects.add(new Robot(pm));
         this.worldObjects.add(new Robot(pm));
     }
 

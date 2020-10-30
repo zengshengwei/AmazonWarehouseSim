@@ -2,9 +2,6 @@ package com.nhlstenden.amazonsimulatie.models;
 
 import com.nhlstenden.amazonsimulatie.dijkstra.*;
 
-import org.w3c.dom.NodeList;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,9 +14,9 @@ import java.util.UUID;
 class Robot implements Object3D, Updatable {
     private UUID uuid;
 
-    private double x = 0;
+    private double x = -1;
     private double y = 0;
-    private double z = 0;
+    private double z = -1;
 
     private ArrayList<Integer> destX = new ArrayList<Integer>();
     private ArrayList<Integer> destY = new ArrayList<Integer>();
@@ -28,9 +25,6 @@ class Robot implements Object3D, Updatable {
     private double rotationZ = 0;
     private boolean moving = false;
     private PathManager pm;
-
-    private double speed = 0.5;
-    private int nodeCounter = 0;
 
     private Node curNode;
     private ArrayList<Node> destNodes = new ArrayList<Node>();
@@ -66,8 +60,13 @@ class Robot implements Object3D, Updatable {
     public boolean update() {
         calcDeltaTime();
 
+        if(destNodes.size() > 0) {
+            GoToVector2(destNodes.get(0));
+        }
         // if (destX.size() != 0 && destY.size() != 0)
         //     GoToVector2(destX.get(0), destY.get(0));
+
+        DirManager();
 
         return true;
     }
