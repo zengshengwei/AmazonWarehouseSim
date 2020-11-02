@@ -77,8 +77,8 @@ public class PathManager {
 			for (int m = 0; m < z; m++) {
 				Node n = new Node(Integer.toString(i));
 				nodeList.add(n);
-				n.x = m;
-				n.z = i;
+				n.x = m * 10;
+				n.z = i * 10;
 
 				if(n.z % 2 != 0 && m != 0 && m < x - 1) { // als z modulo 2 = 0, en niet eerste op de x as of als laatste, maak isstellage
 					n.setIsStellage(true);
@@ -90,7 +90,7 @@ public class PathManager {
 		Node last = new Node("1");
 		nodeList.add(last);
 		last.x = 0;
-		last.z = z + 1;
+		last.z = (z + 1) * 10;
 	}
 
 	public void assignEdges(ArrayList<Node> nodelist) {
