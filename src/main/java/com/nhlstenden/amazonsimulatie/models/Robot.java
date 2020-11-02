@@ -14,9 +14,9 @@ import java.util.UUID;
 class Robot implements Object3D, Updatable {
     private UUID uuid;
 
-    private double x = -1;
+    private double x = 0;
     private double y = 0;
-    private double z = -1;
+    private double z = 0;
 
     private ArrayList<Integer> destX = new ArrayList<Integer>();
     private ArrayList<Integer> destY = new ArrayList<Integer>();
@@ -75,7 +75,9 @@ class Robot implements Object3D, Updatable {
         //geef eindpunt en dan beginpunt mee
         List<Node> path = pm.getShortestPathTo(pm.getNodeList().get(15), curNode); // geef huidige node mee en de target node
           for (Node n : path) {
-              GoToAdd(n);
+              if (n != curNode){
+                GoToAdd(n);
+              }
           }
  
     }
@@ -90,29 +92,33 @@ class Robot implements Object3D, Updatable {
     }
 
     public void GoToVector2(Node n) {
-        double speed = 250;
-        double elapsed = 0.01f;
-        double startX, startZ;
+        if(n.x != this.x || n.z != this.x){
+            double speed = 250;
+            double elapsed = 0.01f;
+            double startX, startZ;
 
-        double distance = Math.sqrt(Math.pow(n.x - this.x, 2) + Math.pow(n.z - this.z, 2));
-        double dirX = (n.x - this.x) / distance;
-        double dirZ = (n.z - this.z) / distance;
-        startX = this.x;
-        startZ = this.z;
-        moving = true;
+            double distance = Math.sqrt(Math.pow(n.x - this.x, 2) + Math.pow(n.z - this.z, 2));
+            double dirX = (n.x - this.x) / distance;
+            double dirZ = (n.z - this.z) / distance;
+            startX = this.x;
+            startZ = this.z;
+            moving = true;
 
-        if (moving == true) {
-            this.x += dirX * speed * elapsed * localDeltaTime;
-            this.z += dirZ * speed * elapsed * localDeltaTime;
+            if (moving == true) {
+                this.x += dirX * speed * elapsed * localDeltaTime;
+                this.z += dirZ * speed * elapsed * localDeltaTime;
 
-            if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
-                this.x = n.x;
-                this.z = n.z;
-                moving = false;
-                destNodes.remove(n);
-                curNode = n;
+                if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
+                    this.x = n.x;
+                    this.z = n.z;
+                    moving = false;
+                    //destNodes.remove(n);
+                    //curNode = n;
+                }
             }
         }
+        destNodes.remove(n);
+        curNode = n;
     }
 
     public void GoToVector2(double x, double z) {
