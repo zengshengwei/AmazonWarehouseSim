@@ -73,8 +73,8 @@ public class PathManager {
 		gridsizeX = x;
 		gridsizeZ = z;
 
-		for (int i = 0; i < x; i++) {
-			for (int m = 0; m < z; m++) {
+		for (int i = 0; i < z; i++) {
+			for (int m = 0; m < x; m++) {
 				Node n = new Node(Integer.toString(i));
 				nodeList.add(n);
 				n.x = m;
@@ -90,7 +90,7 @@ public class PathManager {
 		Node last = new Node("1");
 		nodeList.add(last);
 		last.x = 0;
-		last.z = z + 1;
+		last.z = z;
 	}
 
 	public void assignEdges(ArrayList<Node> nodelist) {

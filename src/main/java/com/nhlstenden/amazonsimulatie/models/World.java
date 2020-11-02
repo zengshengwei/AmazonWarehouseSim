@@ -39,7 +39,7 @@ public class World implements Model {
         CreateGrid(10, 10, 10);
 
         // geef een lengte en breedte mee en een nodelist
-        pm.CreateNodes(5, 5, nodeList);
+        pm.CreateNodes(6, 9, nodeList);
 		pm.assignEdges(nodeList);
 
         // robots krijgen een PathManager mee
