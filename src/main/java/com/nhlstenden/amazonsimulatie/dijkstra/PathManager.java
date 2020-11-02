@@ -70,6 +70,8 @@ public class PathManager {
 	public void CreateNodes(int x, int z, ArrayList<Node> nodelist) {
 		this.nodeList = nodelist;
 
+		gridsizeX = x;
+		gridsizeZ = z;
 
 		for (int i = 0; i < x; i++) {
 			for (int m = 0; m < z; m++) {
