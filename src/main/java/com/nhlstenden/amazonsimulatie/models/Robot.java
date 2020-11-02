@@ -1,7 +1,7 @@
 package com.nhlstenden.amazonsimulatie.models;
 
 import com.nhlstenden.amazonsimulatie.dijkstra.*;
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,9 +14,9 @@ import java.util.UUID;
 class Robot implements Object3D, Updatable {
     private UUID uuid;
 
-    private double x = 0;
+    private double x = -1;
     private double y = 0;
-    private double z = 0;
+    private double z = -1;
 
     private ArrayList<Integer> destX = new ArrayList<Integer>();
     private ArrayList<Integer> destY = new ArrayList<Integer>();
@@ -24,19 +24,24 @@ class Robot implements Object3D, Updatable {
     private double rotationY = 0;
     private double rotationZ = 0;
     private boolean moving = false;
+    private PathManager pm;
 
-    private double speed = 0.5;
-    private int nodeCounter = 0;
-
+    private Node curNode;
+    private ArrayList<Node> destNodes = new ArrayList<Node>();
 
     private double localDeltaTime;
     private long last_time = System.nanoTime();
 
-    public Robot() {
+    public Robot(PathManager pm) {
         this.uuid = UUID.randomUUID();
+        this.pm = pm;
 
-        GoToAdd(15, 15);
-        GoToAdd(-15, -15);
+        Node n = pm.getNodeList().get(0);
+
+        // do computepath here
+        pm.computePaths(n); // geef huidige node mee
+
+        GoToAdd(n); // drive to origin first to begin 
     }
 
     /*
@@ -55,15 +60,59 @@ class Robot implements Object3D, Updatable {
     public boolean update() {
         calcDeltaTime();
 
-        if (destX.size() != 0 && destY.size() != 0)
-            GoToVector2(destX.get(0), destY.get(0));
+        if(destNodes.size() > 0) {
+            GoToVector2(destNodes.get(0));
+        }
+        // if (destX.size() != 0 && destY.size() != 0)
+        //     GoToVector2(destX.get(0), destY.get(0));
+
+        DirManager();
 
         return true;
+    }
+
+    public void DirManager() {
+        //geef eindpunt en dan beginpunt mee
+        List<Node> path = pm.getShortestPathTo(pm.getNodeList().get(15), curNode); // geef huidige node mee en de target node
+          for (Node n : path) {
+              GoToAdd(n);
+          }
+ 
     }
 
     public void GoToAdd(int x, int y) {
         destX.add(x);
         destY.add(y);
+    }
+
+    public void GoToAdd(Node n) {
+        destNodes.add(n);
+    }
+
+    public void GoToVector2(Node n) {
+        double speed = 250;
+        double elapsed = 0.01f;
+        double startX, startZ;
+
+        double distance = Math.sqrt(Math.pow(n.x - this.x, 2) + Math.pow(n.z - this.z, 2));
+        double dirX = (n.x - this.x) / distance;
+        double dirZ = (n.z - this.z) / distance;
+        startX = this.x;
+        startZ = this.z;
+        moving = true;
+
+        if (moving == true) {
+            this.x += dirX * speed * elapsed * localDeltaTime;
+            this.z += dirZ * speed * elapsed * localDeltaTime;
+
+            if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
+                this.x = n.x;
+                this.z = n.z;
+                moving = false;
+                destNodes.remove(n);
+                curNode = n;
+            }
+        }
     }
 
     public void GoToVector2(double x, double z) {

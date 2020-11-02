@@ -1,7 +1,5 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.UUID;
 
 class Plane implements Object3D, Updatable {

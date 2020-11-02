@@ -49,8 +49,8 @@
                 light.intensity = 4;
                 scene.add(light);
 
-                loadModel('3Dmodels/Truck_1359.gltf');
-                loadModel('3Dmodels/warehouse obj.gltf', 0, 0, 20);
+                //loadModel('3Dmodels/Truck_1359.gltf');
+                //loadModel('3Dmodels/warehouse obj.gltf', 0, 0, 20);
                 loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 15);
 
                 window.addEventListener('resize', onWindowResize, false);
@@ -97,7 +97,7 @@
                     if (Object.keys(worldObjects).indexOf(command.parameters.uuid) < 0) {
                         //Wanneer het object een robot is, wordt de code hieronder uitgevoerd.
                         if (command.parameters.type == "robot") {
-                            var geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
+                            var geometry = new THREE.BoxGeometry(3, 1, 3);
                             var cubeMaterials = [
                                 new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
                                 new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
@@ -108,6 +108,8 @@
                             ];
                             var material = new THREE.MeshFaceMaterial(cubeMaterials);
                             var robot = new THREE.Mesh(geometry, material);
+                            robot.position.x = 0;
+                            robot.position.z = 0;
                             robot.position.y = 0.15;
 
                             var group = new THREE.Group();

@@ -21,6 +21,7 @@ public class World implements Model {
      * een lijst van Object3D onderdelen. Deze kunnen in principe alles zijn. (Robots, vrachrtwagens, etc)
      */
     private List<Object3D> worldObjects;
+    PathManager pm;
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
@@ -34,30 +35,15 @@ public class World implements Model {
      */
     public World() {
         this.worldObjects = new ArrayList<>();
-        
-        this.worldObjects.add(new Robot());
-        this.worldObjects.add(new Robot());
-        //CreateGrid(10, 10, 10);
+        pm = new PathManager();
+        CreateGrid(10, 10, 10);
 
-        PathManager pm = new PathManager();
+        // geef een lengte en breedte mee en een nodelist
         pm.CreateNodes(5, 5, nodeList);
 		pm.assignEdges(nodeList);
 
-		// do computepath here
-		pm.computePaths((Node)nodeList.get(1));
-
-		// print shortest paths
-		/*
-		 * for(Node n: nodes){ System.out.println("Distance to " + n + ": " +
-		 * n.shortestDistance); List<Node> path = getShortestPathTo(n);
-		 * System.out.println("Path: " + path); }
-		 */
-
-        List<Node> path = pm.getShortestPathTo(nodeList.get(14), nodeList.get(1));
-        for (Node n : path) {
-            System.out.println("Path: " + n.x + " | " + n.z + " Weight: " + n.shortestDistance);
-        }
-
+        // robots krijgen een PathManager mee
+        this.worldObjects.add(new Robot(pm));
     }
 
     public void CreateGrid(int width, int height, int tilesize) {
