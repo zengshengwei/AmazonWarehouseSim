@@ -26,6 +26,10 @@ public class Node implements Comparable<Node>{
 		return isStellage;
 	}
 
+	public void setIsStellage(boolean b) {
+		isStellage = b;
+	}
+
 	public String toString(){
 			return weight;
 	}
