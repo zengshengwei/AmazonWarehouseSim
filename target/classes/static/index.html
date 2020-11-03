@@ -129,6 +129,26 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
+                        if (command.parameters.type == "node") {
+                            var geometry = new THREE.BoxGeometry(3, 3, 3);
+                            var nodeMaterials = [
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
+                            ];
+                            var material = new THREE.MeshFaceMaterial(nodeMaterials);
+                            var node = new THREE.Mesh(geometry, material);
+                            node.position.y = 0.9;
+
+                            var group = new THREE.Group();
+                            group.add(node);
+
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
+                        }
                     }
 
 
