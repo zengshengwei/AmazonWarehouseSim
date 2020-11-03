@@ -59,7 +59,7 @@ public class PathManager {
 		if(start != target){
 			// trace path from target to source
 			List<Node> path = new ArrayList<Node>();
-			for (Node node = target; node != null; node = node.parent) {
+			for (Node node = target; node != start; node = node.parent) {
 				path.add(node);
 			}
 			// reverse the order such that it will be from source to target
