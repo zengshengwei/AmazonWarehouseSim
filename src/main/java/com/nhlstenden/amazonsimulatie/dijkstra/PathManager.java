@@ -11,6 +11,7 @@ public class PathManager {
 
 	private ArrayList<Node> nodeList;
 	private int gridsizeX, gridsizeZ;
+	int mult = 10;
 
 	public void computePaths(Node source) {
 		source.shortestDistance = 0;
@@ -72,7 +73,7 @@ public class PathManager {
 
 		gridsizeX = x;
 		gridsizeZ = z;
-		int mult = 10;
+
 
 		for (int i = 0; i < z; i++) {
 			for (int m = 0; m < x; m++) {
@@ -103,15 +104,16 @@ public class PathManager {
 				int index = nodelist.indexOf(n); // get index
 
 				if(index == nodelist.size() -1) { // last one [DROPOFF POINT]
-					n.adjacencies.add(new Edge(nodelist.get(index - 1), 1));
+					n.adjacencies.add(new Edge(nodelist.get(index - gridsizeX), 1));
 				}
 				// if within boundary
-				else if (n.x < gridsizeX - 1 && n.z < gridsizeZ - 1) {
-					if(n.z % 2 == 0) {
+				else if (n.x < gridsizeX * mult - 1*mult && n.z < gridsizeZ * mult - 1*mult) {
+					if(!n.getIsStellage()) {
 						n.adjacencies.add(new Edge(nodelist.get(index + 1), 1)); // get right
-					}
+					} 
 					n.adjacencies.add(new Edge(nodelist.get(index + gridsizeX), 1)); // get bottom
-					if (n.x > 0 && n.z % 2 == 0) { // if there is node to the left
+					
+					if (n.x > 0 && !n.getIsStellage()) { // if there is node to the left
 						n.adjacencies.add( new Edge(nodelist.get(index - 1), 1)); // get left 
 					}
 					if (n.z > 0) { // if there is node up top
@@ -119,15 +121,18 @@ public class PathManager {
 					}
 
 				} // if x is over boundary [MOST RIGHT ROW]
-				else if (n.x >= gridsizeX - 1 && n.z < gridsizeZ - 1 && gridsizeZ > 0) {
+				else if (n.x >= gridsizeX*mult - 1*mult && n.z < gridsizeZ*mult - 1*mult && gridsizeZ*mult > 0) {
 					n.adjacencies.add(new Edge(nodelist.get(index + gridsizeX), 1)); // get bottom
 
 				} // if z is over boundary [BOTTOM ROW]
-				else if (n.z >= gridsizeZ - 1 && n.x < gridsizeX - 1 && gridsizeX > 0) {
+				else if (n.z >= gridsizeZ*mult - 1*mult && n.x < gridsizeX*mult - 1*mult && gridsizeX*mult > 0) {
 					n.adjacencies.add(new Edge(nodelist.get(index + 1), 1)); // get right
+					if(n.x == 0 || n.x == gridsizeZ*mult -1*mult){
+						n.adjacencies.add( new Edge(nodelist.get(index - 1), 1)); // get left 
+					}
 
 				} // if x and z are over boundary [RIGHT CORNER]
-				else if (n.x >= gridsizeX - 1 && n.z >= gridsizeZ - 1) {
+				else if (n.x >= gridsizeX*mult - 1*mult && n.z >= gridsizeZ*mult - 1*mult) {
 					n.adjacencies.add( new Edge(nodelist.get(index - 1), 1)); // get left 
 					n.adjacencies.add(new Edge(nodeList.get(index - gridsizeX), 1)); // get top neighbour
 				}
