@@ -72,15 +72,19 @@ public class PathManager {
 
 		gridsizeX = x;
 		gridsizeZ = z;
+		int mult = 10;
 
 		for (int i = 0; i < z; i++) {
 			for (int m = 0; m < x; m++) {
 				Node n = new Node(Integer.toString(i));
 				nodeList.add(n);
-				n.x = m * 10;
-				n.z = i * 10;
+				n.x = m * mult;
+				n.z = i * mult;
 
-				if(n.z % 2 != 0 && m != 0 && m < x - 1) { // als z modulo 2 = 0, en niet eerste op de x as of als laatste, maak isstellage
+				// z = 9, x = 6
+				// 
+
+				if(i % 2 != 0 && m != 0 && m < x - 1) { // als z modulo 2 = 0, en niet eerste op de x as of als laatste, maak isstellage
 					n.setIsStellage(true);
 				}
 			}
@@ -90,7 +94,7 @@ public class PathManager {
 		Node last = new Node("1");
 		nodeList.add(last);
 		last.x = 0;
-		last.z = z;
+		last.z = z * 10;
 	}
 
 	public void assignEdges(ArrayList<Node> nodelist) {

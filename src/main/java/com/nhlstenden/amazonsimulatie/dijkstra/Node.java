@@ -7,7 +7,7 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 	
 	private boolean isStellage = false;
 
-	public double x, y, z;
+	public int x, y, z;
 	private UUID uuid;
 
 	public final String weight;
@@ -86,6 +86,10 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 	}
 	@Override
 	public String getType() {
-		return Node.class.getSimpleName().toLowerCase();
+		if(isStellage == true){
+			return "true";
+		}else
+		return "false";
+		//return Node.class.getSimpleName().toLowerCase();
 	}
 }

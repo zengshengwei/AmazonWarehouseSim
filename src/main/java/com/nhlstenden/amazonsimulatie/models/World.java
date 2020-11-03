@@ -44,6 +44,10 @@ public class World implements Model {
 
         // robots krijgen een PathManager mee
         this.worldObjects.add(new Robot(pm));
+
+        for(Node n : nodeList){
+            this.worldObjects.add((n));
+        }
     }
 
     public void CreateGrid(int width, int height, int tilesize) {

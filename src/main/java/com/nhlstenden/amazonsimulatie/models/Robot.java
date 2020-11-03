@@ -93,7 +93,7 @@ class Robot implements Object3D, Updatable {
 
     public void GoToVector2(Node n) {
         if(n.x != this.x || n.z != this.x){
-            double speed = 250;
+            double speed = 10;
             double elapsed = 0.01f;
             double startX, startZ;
 
@@ -104,7 +104,7 @@ class Robot implements Object3D, Updatable {
             startZ = this.z;
             moving = true;
 
-            if (moving == true) {
+            while (moving == true) {
                 this.x += dirX * speed * elapsed * localDeltaTime;
                 this.z += dirZ * speed * elapsed * localDeltaTime;
 
