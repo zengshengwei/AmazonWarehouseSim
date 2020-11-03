@@ -4,6 +4,7 @@ import com.nhlstenden.amazonsimulatie.dijkstra.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /*
@@ -60,7 +61,7 @@ class Robot implements Object3D, Updatable {
     public boolean update() {
         calcDeltaTime();
 
-        if(destNodes.size() > 0) {
+        while(destNodes.size() > 0) {
             GoToVector2(destNodes.get(0));
         }
         // if (destX.size() != 0 && destY.size() != 0)
@@ -74,12 +75,13 @@ class Robot implements Object3D, Updatable {
     public void DirManager() {
         //geef eindpunt en dan beginpunt mee
         List<Node> path = pm.getShortestPathTo(pm.getNodeList().get(15), curNode); // geef huidige node mee en de target node
+        if(path != null){
           for (Node n : path) {
               if (n != curNode){
                 GoToAdd(n);
               }
           }
- 
+        }
     }
 
     public void GoToAdd(int x, int y) {
@@ -93,7 +95,7 @@ class Robot implements Object3D, Updatable {
 
     public void GoToVector2(Node n) {
         if(n.x != this.x || n.z != this.x){
-            double speed = 10;
+            double speed = 1;
             double elapsed = 0.01f;
             double startX, startZ;
 
@@ -112,8 +114,6 @@ class Robot implements Object3D, Updatable {
                     this.x = n.x;
                     this.z = n.z;
                     moving = false;
-                    //destNodes.remove(n);
-                    //curNode = n;
                 }
             }
         }
@@ -150,7 +150,7 @@ class Robot implements Object3D, Updatable {
     public void calcDeltaTime() {
         long time = System.nanoTime();
         localDeltaTime = ((time - last_time) / 1000000);
-        localDeltaTime /= 1000;
+        localDeltaTime /= 100000;
         last_time = time;
     }
 
