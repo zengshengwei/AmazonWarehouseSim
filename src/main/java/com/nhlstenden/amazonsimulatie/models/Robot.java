@@ -73,8 +73,11 @@ class Robot implements Object3D, Updatable {
     }
 
     public void DirManager() {
+        Random r = new Random();
+        int randIndex = r.nextInt(pm.getNodeList().size()); // laat naar random locaties rennon
+
         //geef eindpunt en dan beginpunt mee
-        List<Node> path = pm.getShortestPathTo(pm.getNodeList().get(15), curNode); // geef huidige node mee en de target node
+        List<Node> path = pm.getShortestPathTo(pm.getNodeList().get(randIndex), curNode); // geef huidige node mee en de target node
         if(path != null){
           for (Node n : path) {
               if (n != curNode){
@@ -95,7 +98,7 @@ class Robot implements Object3D, Updatable {
 
     public void GoToVector2(Node n) {
         if(n.x != this.x || n.z != this.x){
-            double speed = 1;
+            double speed = 10;
             double elapsed = 0.01f;
             double startX, startZ;
 
@@ -109,6 +112,7 @@ class Robot implements Object3D, Updatable {
             while (moving == true) {
                 this.x += dirX * speed * elapsed * localDeltaTime;
                 this.z += dirZ * speed * elapsed * localDeltaTime;
+                
 
                 if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
                     this.x = n.x;
