@@ -66,7 +66,6 @@ public class World implements Model {
                         isdark = true;
                 }
 
-
                 this.worldObjects.add(new Plane(w * tilesize, h * tilesize, tilesize, isdark));
             }
         }

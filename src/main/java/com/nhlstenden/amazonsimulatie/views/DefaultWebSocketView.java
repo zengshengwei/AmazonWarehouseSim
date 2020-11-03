@@ -8,6 +8,8 @@ import com.nhlstenden.amazonsimulatie.models.Object3D;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.nhlstenden.amazonsimulatie.dijkstra.Node;
+
 /*
  * Deze class is de standaard websocketview. De class is een andere variant
  * van een gewone view. Een "normale" view is meestal een schermpje op de PC,
@@ -58,9 +60,25 @@ public class DefaultWebSocketView implements View {
      * naar de client.
      */
     private String jsonifyObject3D(Object3D object) {
-        return  "{" 
+        if(object.getType() != "node") {
+            return  "{" 
+            + surroundString("uuid") + ":" + surroundString(object.getUUID()) + ","
+            + surroundString("type") + ":" + surroundString(object.getType()) + ","
+            + surroundString("x") + ":" + object.getX() + ","
+            + surroundString("y") + ":" + object.getY() + ","
+            + surroundString("z") + ":" + object.getZ() + ","
+            + surroundString("rotationX") + ":" + object.getRotationX() + ","
+            + surroundString("rotationY") + ":" + object.getRotationY() + ","
+            + surroundString("rotationZ") + ":" + object.getRotationZ()
+          + "}";
+        }
+        else {
+            Node n = (Node)object;
+ 
+            return  "{" 
                 + surroundString("uuid") + ":" + surroundString(object.getUUID()) + ","
                 + surroundString("type") + ":" + surroundString(object.getType()) + ","
+                + surroundString("isStellage") + ":" + surroundString(String.valueOf(n.getIsStellage())) + ","
                 + surroundString("x") + ":" + object.getX() + ","
                 + surroundString("y") + ":" + object.getY() + ","
                 + surroundString("z") + ":" + object.getZ() + ","
@@ -68,6 +86,8 @@ public class DefaultWebSocketView implements View {
                 + surroundString("rotationY") + ":" + object.getRotationY() + ","
                 + surroundString("rotationZ") + ":" + object.getRotationZ()
               + "}";
+        }
+        
     }
 
     private String surroundString(String s) {
