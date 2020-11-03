@@ -56,16 +56,18 @@ public class PathManager {
 
 	public List<Node> getShortestPathTo(Node target, Node start) {
 
-		// trace path from target to source
-		List<Node> path = new ArrayList<Node>();
-		for (Node node = target; node != null; node = node.parent) {
-			path.add(node);
+		if(start != target){
+			// trace path from target to source
+			List<Node> path = new ArrayList<Node>();
+			for (Node node = target; node != null; node = node.parent) {
+				path.add(node);
+			}
+			// reverse the order such that it will be from source to target
+			Collections.reverse(path);
+
+			return path;
 		}
-
-		// reverse the order such that it will be from source to target
-		Collections.reverse(path);
-
-		return path;
+		return null;
 	}
 
 	public void CreateNodes(int x, int z, ArrayList<Node> nodelist) {
