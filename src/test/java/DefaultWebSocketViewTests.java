@@ -13,7 +13,6 @@ import org.springframework.web.socket.WebSocketSession;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -94,7 +93,7 @@ public class DefaultWebSocketViewTests {
             
             return null;
             }
-        }).when(mockSession).sendMessage(any());
+        });
 
         /**
          * Comment #1
