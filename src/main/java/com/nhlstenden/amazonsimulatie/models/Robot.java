@@ -113,7 +113,7 @@ class Robot implements Object3D, Updatable {
             startZ = this.z;
             moving = true;
 
-            while (moving == true) {
+            if (moving) {
                 this.x += dirX * speed * elapsed * localDeltaTime;
                 this.z += dirZ * speed * elapsed * localDeltaTime;
                 
