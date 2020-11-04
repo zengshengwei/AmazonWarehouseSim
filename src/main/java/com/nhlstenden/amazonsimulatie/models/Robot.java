@@ -64,6 +64,10 @@ class Robot implements Object3D, Updatable {
         while(destNodes.size() > 0) {
             GoToVector2(destNodes.get(0));
         }
+        
+        if(curNode.getIsStellage()){
+            PickUpStellage();
+        }
         // if (destX.size() != 0 && destY.size() != 0)
         //     GoToVector2(destX.get(0), destY.get(0));
 
@@ -149,6 +153,12 @@ class Robot implements Object3D, Updatable {
                 destY.remove(0);
             }
         }
+    }
+
+    public void PickUpStellage(){
+
+        // doe pickup stellage
+
     }
 
     public void calcDeltaTime() {

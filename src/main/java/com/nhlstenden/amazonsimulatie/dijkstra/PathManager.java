@@ -13,6 +13,11 @@ public class PathManager {
 	private int gridsizeX, gridsizeZ;
 	int mult = 10;
 
+	private ArrayList<Node> path = new ArrayList<Node>();
+	private ArrayList<Node> huidigeKortstePad = new ArrayList<Node>();
+	private ArrayList<Node> tempPath = new ArrayList<Node>();
+	private ArrayList<Node> visited = new ArrayList<Node>();
+
 	public void computePaths(Node source) {
 		source.shortestDistance = 0;
 
@@ -56,12 +61,33 @@ public class PathManager {
 
 	public List<Node> getShortestPathTo(Node target, Node start) {
 
+
+		// Voor elke adjecencie node moeten we kijken of deze naar target toe gaat en alleen de juiste weg aan path toevoegen?
+		// recursie gebruiken?
+
 		if(start != target){
 			// trace path from target to source
-			List<Node> path = new ArrayList<Node>();
-			for (Node node = target; node != start; node = node.parent) {
-				path.add(node);
+
+			for (int i = 0; i < target.adjacencies.size(); i ++){
+				
+				for (Node node = target; node != start;) {
+					if(!visited.contains(node.adjacencies.get(i).target)){
+						node = node.adjacencies.get(i).target;
+						visited.add(node);
+						tempPath.add(node);
+						//getShortestPathTo(node, start);
+					}else {
+						visited.clear();
+						break;
+					}
+				}if(!visited.isEmpty()){
+					if(huidigeKortstePad.size() > tempPath.size()){
+						huidigeKortstePad = tempPath;
+					}
+				}
 			}
+
+			
 			// reverse the order such that it will be from source to target
 			Collections.reverse(path);
 
