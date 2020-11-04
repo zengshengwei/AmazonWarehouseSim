@@ -10,8 +10,9 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 	public int x, y, z;
 	private UUID uuid;
 
-	public final String weight;
+	public String weight;
 	public ArrayList<Edge> adjacencies = new ArrayList<Edge>();
+	private List<Node> shortestPath = new LinkedList<>();
 	public double shortestDistance = Double.POSITIVE_INFINITY;
 	public Node parent;
 	private double rotationX = 0;
@@ -26,6 +27,14 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 	public Node(String weight, boolean isstellage){
 		this.weight = weight;
 		this.isStellage = isstellage;
+	}
+
+	public List<Node> getShortestPath() {
+		return shortestPath;
+	}
+
+	public void setShortestPath(List<Node> shortestpath) {
+		this.shortestPath = shortestpath; 
 	}
 
 	public boolean getIsStellage() {

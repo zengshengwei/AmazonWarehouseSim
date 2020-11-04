@@ -81,7 +81,7 @@ class Robot implements Object3D, Updatable {
         int randIndex = r.nextInt(pm.getNodeList().size()); // laat naar random locaties rennon
 
         //geef eindpunt en dan beginpunt mee
-        List<Node> path = pm.getShortestPathTo(pm.getNodeList().get(randIndex), curNode); // geef huidige node mee en de target node
+        List<Node> path = pm.getShortestPathTo(pm.getNodeList(), pm.getNodeList().get(randIndex), this.curNode); // geef huidige node mee en de target node
         if(path != null){
           for (Node n : path) {
               if (n != curNode){
