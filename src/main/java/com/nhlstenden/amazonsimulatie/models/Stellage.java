@@ -16,7 +16,6 @@ public class Stellage implements Object3D, Updatable {
 
     public Robot parent;
 
-
     public Stellage() {
         this.uuid = UUID.randomUUID();
     }
@@ -51,26 +50,15 @@ public class Stellage implements Object3D, Updatable {
         return this.x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     @Override
     public double getY() {
         return this.y;
     }
 
-    public void setY(int y) {
-        this.y = y;
-    }
 
     @Override
     public double getZ() {
         return this.z;
-    }
-
-    public void setZ(int z) {
-        this.z = z;
     }
 
     public void setPos(double x, double y, double z) {

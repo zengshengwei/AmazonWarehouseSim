@@ -31,6 +31,9 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 
 	public void addStellage(Stellage s) {
 		stellage = s;
+		if(stellage.parent != null) {
+			stellage.parent = null;
+		}
 		stellage.setPos(this.x, 1.5, this.z);
 	}
 
