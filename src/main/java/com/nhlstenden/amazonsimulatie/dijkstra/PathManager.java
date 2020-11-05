@@ -1,6 +1,7 @@
 package com.nhlstenden.amazonsimulatie.dijkstra;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public class PathManager {
 	/*
@@ -12,6 +13,14 @@ public class PathManager {
 	private ArrayList<Node> nodeList;
 	private int gridsizeX, gridsizeZ;
 	int mult = 10;
+
+	// private ArrayList<Node> path = new ArrayList<Node>();
+	// private ArrayList<Node> huidigeKortstePad = new ArrayList<Node>();
+	// private ArrayList<Node> tempPath = new ArrayList<Node>(); 
+	// private ArrayList<Node> visited = new ArrayList<Node>();
+	private ArrayList<Node> settledNodes = new ArrayList<Node>();
+	private ArrayList<Node> unsettledNodes = new ArrayList<Node>();
+
 
 	public void computePaths(Node source) {
 		source.shortestDistance = 0;
@@ -50,24 +59,80 @@ public class PathManager {
 		}
 	}
 
-	public List<Node> getNodeList() {
+	public ArrayList<Node> getNodeList() {
 		return nodeList;
 	}
 
-	public List<Node> getShortestPathTo(Node target, Node start) {
+	public List<Node> getShortestPathTo(ArrayList<Node> graph, Node source, Node curNode) {
+		unsettledNodes.add(source);
 
-		if(start != target){
-			// trace path from target to source
-			List<Node> path = new ArrayList<Node>();
-			for (Node node = target; node != start; node = node.parent) {
-				path.add(node);
+		while (unsettledNodes.size() != 0) {
+			Node currentNode = curNode;
+			unsettledNodes.remove(currentNode);
+			currentNode = unsettledNodes.get(0);
+			
+			HashMap<Node, Integer> adjecentNodes = new HashMap<Node, Integer>();
+			for(Edge edge : currentNode.adjacencies) {
+				adjecentNodes.put(edge.target, edge.weight);
 			}
-			// reverse the order such that it will be from source to target
-			Collections.reverse(path);
 
-			return path;
+			for (Entry < Node, Integer> adjacencyPair: 
+			  adjecentNodes.entrySet()) {
+				Node adjacentNode = adjacencyPair.getKey();
+				Integer edgeWeight = adjacencyPair.getValue();
+				if (!settledNodes.contains(adjacentNode)) {
+					CalculateMinimumDistance(adjacentNode, edgeWeight, currentNode);
+					unsettledNodes.add(adjacentNode);
+				}
+			}
+			settledNodes.add(currentNode);
 		}
-		return null;
+		return graph;
+
+
+
+		// Voor elke adjecencie node moeten we kijken of deze naar target toe gaat en alleen de juiste weg aan path toevoegen?
+		// recursie gebruiken?
+
+		// if(start != target){
+		// 	// trace path from target to source
+
+		// 	for (int i = 0; i < target.adjacencies.size(); i ++){
+				
+		// 		for (Node node = target; node != start;) {
+		// 			if(!visited.contains(node.adjacencies.get(i).target)){
+		// 				node = node.adjacencies.get(i).target;
+		// 				visited.add(node);
+		// 				tempPath.add(node);
+		// 				//getShortestPathTo(node, start);
+		// 			}else {
+		// 				visited.clear();
+		// 				break;
+		// 			}
+		// 		}if(!visited.isEmpty()){
+		// 			if(huidigeKortstePad.size() > tempPath.size()){
+		// 				huidigeKortstePad = tempPath;
+		// 			}
+		// 		}
+		// 	}
+
+			
+		// 	// reverse the order such that it will be from source to target
+		// 	Collections.reverse(path);
+
+		// 	return path;
+		// }
+		//return null;
+	}
+
+	private void CalculateMinimumDistance(Node evaluationNode, Integer edgeWeigh, Node sourceNode) {
+		Integer sourceDistance = Integer.parseInt(sourceNode.weight);
+		if (sourceDistance + edgeWeigh < Integer.parseInt(evaluationNode.weight)) {
+			evaluationNode.weight = sourceDistance.toString() + edgeWeigh.toString();
+			LinkedList<Node> shortestPath = new LinkedList<>(sourceNode.getShortestPath());
+			shortestPath.add(sourceNode);
+			evaluationNode.setShortestPath(shortestPath);
+		}
 	}
 
 	public void CreateNodes(int x, int z, ArrayList<Node> nodelist) {

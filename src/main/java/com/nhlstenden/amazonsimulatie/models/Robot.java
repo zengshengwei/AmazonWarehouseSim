@@ -64,6 +64,10 @@ class Robot implements Object3D, Updatable {
         while(destNodes.size() > 0) {
             GoToVector2(destNodes.get(0));
         }
+        
+        if(curNode.getIsStellage()){
+            PickUpStellage();
+        }
         // if (destX.size() != 0 && destY.size() != 0)
         //     GoToVector2(destX.get(0), destY.get(0));
 
@@ -77,7 +81,7 @@ class Robot implements Object3D, Updatable {
         int randIndex = r.nextInt(pm.getNodeList().size()); // laat naar random locaties rennon
 
         //geef eindpunt en dan beginpunt mee
-        List<Node> path = pm.getShortestPathTo(pm.getNodeList().get(randIndex), curNode); // geef huidige node mee en de target node
+        List<Node> path = pm.getShortestPathTo(pm.getNodeList(), pm.getNodeList().get(randIndex), this.curNode); // geef huidige node mee en de target node
         if(path != null){
           for (Node n : path) {
               if (n != curNode){
@@ -109,7 +113,7 @@ class Robot implements Object3D, Updatable {
             startZ = this.z;
             moving = true;
 
-            while (moving == true) {
+            if (moving) {
                 this.x += dirX * speed * elapsed * localDeltaTime;
                 this.z += dirZ * speed * elapsed * localDeltaTime;
                 
@@ -149,6 +153,12 @@ class Robot implements Object3D, Updatable {
                 destY.remove(0);
             }
         }
+    }
+
+    public void PickUpStellage(){
+
+        // doe pickup stellage
+
     }
 
     public void calcDeltaTime() {
