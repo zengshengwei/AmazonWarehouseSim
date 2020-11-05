@@ -88,8 +88,9 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 	public String getType() {
 		if(isStellage == true){
 			return "true";
-		}else
+		}else{
 		return "false";
+		}
 		//return Node.class.getSimpleName().toLowerCase();
 	}
 }

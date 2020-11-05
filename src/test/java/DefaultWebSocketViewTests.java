@@ -89,7 +89,7 @@ public class DefaultWebSocketViewTests {
              * JSON code hieronder zie je dat voor elke parameter in de JSON een standaardwaarde is ingevoerd. Ga nu naar
              * comment #6 om te zien hoe we ervoor zorgen dat de update() methode ook gebruiktmaakt van die standaardwaarden.
              */
-            assertThat(((TextMessage)args[0]).getPayload(), is("{\"command\": \"object_update\",\"parameters\": {\"uuid\":\"unique_string\",\"type\":\"type_here\",\"x\":0.0,\"y\":0.0,\"z\":0.0,\"rotationX\":0.0,\"rotationY\":0.0,\"rotationZ\":0.0}}"));
+            assertThat(((TextMessage)args[0]).getPayload(), is("{\"command\": \"object_update\",\"parameters\": {\"uuid\":\"unique_string\",\"type\":\"type_here\",\"x\":6.0,\"y\":0.0,\"z\":9.0,\"rotationX\":0.0,\"rotationY\":0.0,\"rotationZ\":0.0}}"));
             
             return null;
             }
