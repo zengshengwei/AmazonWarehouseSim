@@ -45,6 +45,14 @@ public class World implements Model {
         // robots krijgen een PathManager mee
         this.worldObjects.add(new Robot(pm));
 
+        for(int i = 0; i < pm.getNodeList().size(); i++) {
+            if(pm.getNodeList().get(i).getIsStellage()) {
+                Stellage s = new Stellage();
+                pm.getNodeList().get(i).addStellage(s);
+                this.worldObjects.add(s);
+            }
+        }
+
         for(Node n : nodeList){
             this.worldObjects.add((n));
         }

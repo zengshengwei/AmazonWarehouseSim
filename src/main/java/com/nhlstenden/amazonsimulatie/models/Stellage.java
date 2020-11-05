@@ -1,8 +1,9 @@
 package com.nhlstenden.amazonsimulatie.models;
+import com.nhlstenden.amazonsimulatie.dijkstra.*;
 
 import java.util.UUID;
 
-class Stellage implements Object3D, Updatable {
+public class Stellage implements Object3D, Updatable {
     private UUID uuid;
 
     private double x = 0;
@@ -13,11 +14,26 @@ class Stellage implements Object3D, Updatable {
     private double rotationY = 0;
     private double rotationZ = 0;
 
+    public Robot parent;
 
+
+    public Stellage() {
+        this.uuid = UUID.randomUUID();
+    }
 
     @Override
     public boolean update() {
+        if(parent != null) { // stick to parent if has one
+            x = parent.getX();
+            z = parent.getZ();
+            y = 1.5;
+        }
+
         return true;
+    }
+
+    public void pickUp(Robot parent) {
+        this.parent = parent;
     }
 
     @Override
@@ -35,14 +51,32 @@ class Stellage implements Object3D, Updatable {
         return this.x;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     @Override
     public double getY() {
         return this.y;
     }
 
+    public void setY(int y) {
+        this.y = y;
+    }
+
     @Override
     public double getZ() {
         return this.z;
+    }
+
+    public void setZ(int z) {
+        this.z = z;
+    }
+
+    public void setPos(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     @Override

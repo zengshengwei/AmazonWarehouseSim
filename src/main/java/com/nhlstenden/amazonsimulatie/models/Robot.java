@@ -157,7 +157,7 @@ class Robot implements Object3D, Updatable {
 
     public void PickUpStellage(){
 
-        // doe pickup stellage
+        // hoe pickup stellage
 
     }
 

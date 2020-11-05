@@ -1,11 +1,11 @@
 package com.nhlstenden.amazonsimulatie.dijkstra;
-import com.nhlstenden.amazonsimulatie.models.Object3D;
-import com.nhlstenden.amazonsimulatie.models.Updatable;
+import com.nhlstenden.amazonsimulatie.models.*;
 import java.util.*;
 
 public class Node implements Comparable<Node>, Object3D, Updatable{
 	
 	private boolean isStellage = false;
+	public Stellage stellage = null;
 
 	public int x, y, z;
 	private UUID uuid;
@@ -27,6 +27,11 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 	public Node(String weight, boolean isstellage){
 		this.weight = weight;
 		this.isStellage = isstellage;
+	}
+
+	public void addStellage(Stellage s) {
+		stellage = s;
+		stellage.setPos(this.x, 1.5, this.z);
 	}
 
 	public List<Node> getShortestPath() {

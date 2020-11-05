@@ -51,21 +51,27 @@
 
                 //loadModel('3Dmodels/Truck_1359.gltf');
                 //loadModel('3Dmodels/warehouse obj.gltf', 0, 0, 20);
-                loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 15);
+                //loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 15);
 
                 window.addEventListener('resize', onWindowResize, false);
             }
 
             function loadModel(root, posx = 0, posy = 0, scale = 1) {
                 gltfLoader.load(root, function (gltf) {
-                    truck = gltf.scene.children[0];
-                    truck.scale.set(scale, scale, scale); 
-                    truck.rotation.y = Math.PI / 1.0;                          
-                    truck.position.x = posx;
-                    truck.position.z = posy;
-                    scene.add(gltf.scene);
-                    animate();
+                    model = gltf.scene.children[0];
+                    model.scale.set(scale, scale, scale); 
+                    model.rotation.y = Math.PI / 1.0;                          
+                    model.position.x = posx;
+                    model.position.z = posy;
+
+                    var group = new THREE.Group();
+                    group.add(robot);
+
+                    scene.add(group);
+                    worldObjects[command.parameters.uuid] = group;
                 });
+
+                return model;
             }
 
             function onWindowResize() {
@@ -165,6 +171,27 @@
 
                             var group = new THREE.Group();
                             group.add(node);
+
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
+                        }
+
+                        if(command.parameters.type == "stellage") {
+                            var geometry = new THREE.BoxGeometry(3, 4, 3);
+                            var cubeMaterials = [
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/rocks.png"), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/rocks.png"), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/rocks.png"), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/rocks.png"), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/rocks.png"), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/rocks.png"), side: THREE.DoubleSide }), //BACK
+                            ];
+                            var material = new THREE.MeshFaceMaterial(cubeMaterials);
+                            var stellage = new THREE.Mesh(geometry, material);
+                            stellage.position.y = 1.5;
+
+                            var group = new THREE.Group();
+                            group.add(stellage);
 
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
