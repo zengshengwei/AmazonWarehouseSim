@@ -4,11 +4,6 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public class PathManager {
-	/*
-	 * Dijkstra Algorithm
-	 * 
-	 *
-	 */
 
 	private ArrayList<Node> nodeList;
 	private int gridsizeX, gridsizeZ;
