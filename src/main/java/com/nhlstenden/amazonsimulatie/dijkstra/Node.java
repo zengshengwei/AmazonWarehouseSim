@@ -29,13 +29,23 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 		this.isStellage = isstellage;
 	}
 
-	public void addStellage(Stellage s) {
-		stellage = s;
-		if(stellage.parent != null) {
-			stellage.parent = null;
+	@Override
+    public boolean update() {
+		if(stellage != null){
+			if(stellage.getX() != this.x && stellage.getZ() != this.z){
+			stellage.setPos(x, 1.5, z);
+			}
 		}
-		stellage.setPos(this.x, 1.5, this.z);
+        return true;
 	}
+
+	//public void addStellage(Stellage s) {
+		//stellage = s;
+		//if(stellage.parent != null) {
+			//stellage.parent = null;
+		//}
+		//stellage.setPos(this.x, 1.5, this.z);
+	//}
 
 	public List<Node> getShortestPath() {
 		return shortestPath;
@@ -60,6 +70,7 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
 	public int compareTo(Node other){
 		return Double.compare(shortestDistance, other.shortestDistance);
 	}
+	
 
 	@Override
     public String getUUID() {
@@ -95,12 +106,6 @@ public class Node implements Comparable<Node>, Object3D, Updatable{
     public double getRotationZ() {
         return rotationZ;
     }
-
-    @Override
-    public boolean update() {
-        
-        return true;
-	}
 	@Override
 	public String getType() {
 		if(isStellage == true){

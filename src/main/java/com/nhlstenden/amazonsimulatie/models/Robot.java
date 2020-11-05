@@ -61,19 +61,13 @@ class Robot implements Object3D, Updatable {
     @Override
     public boolean update() {
         if(child != null) {
-            x = child.getX();
-            z = child.getZ();
-            y = 1.5;
+            child.setPos(x, 1.5, z);
         }
 
         calcDeltaTime();
 
         while(destNodes.size() > 0) {
             GoToVector2(destNodes.get(0));
-        }
-        
-        if(curNode.getIsStellage()){
-            PickUpStellage();
         }
         // if (destX.size() != 0 && destY.size() != 0)
         //     GoToVector2(destX.get(0), destY.get(0));
@@ -166,10 +160,19 @@ class Robot implements Object3D, Updatable {
         }
     }
 
-    public void PickUpStellage(){
+    public void PickUpStellage(Node n){
+        if(n.getIsStellage() && n.stellage != null){
+            child = n.stellage;
+            n.stellage = null;
+        }
 
-        // hoe pickup stellage
+    }
 
+    public void DropStellage(Node n){
+        if(n.getIsStellage() && n.stellage == null && child != null){
+            n.stellage = child;
+            child = null;
+        }
     }
 
     public void calcDeltaTime() {
