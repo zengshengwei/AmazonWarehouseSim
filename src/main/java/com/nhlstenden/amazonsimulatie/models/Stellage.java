@@ -14,7 +14,7 @@ public class Stellage implements Object3D, Updatable {
     private double rotationY = 0;
     private double rotationZ = 0;
 
-    public Robot parent;
+
 
     public Stellage() {
         this.uuid = UUID.randomUUID();
@@ -22,17 +22,8 @@ public class Stellage implements Object3D, Updatable {
 
     @Override
     public boolean update() {
-        if(parent != null) { // stick to parent if has one
-            x = parent.getX();
-            z = parent.getZ();
-            y = 1.5;
-        }
 
         return true;
-    }
-
-    public void pickUp(Robot parent) {
-        this.parent = parent;
     }
 
     @Override
@@ -50,15 +41,26 @@ public class Stellage implements Object3D, Updatable {
         return this.x;
     }
 
+    public void setX(int x) {
+        this.x = x;
+    }
+
     @Override
     public double getY() {
         return this.y;
     }
 
+    public void setY(int y) {
+        this.y = y;
+    }
 
     @Override
     public double getZ() {
         return this.z;
+    }
+
+    public void setZ(int z) {
+        this.z = z;
     }
 
     public void setPos(double x, double y, double z) {

@@ -26,6 +26,7 @@ class Robot implements Object3D, Updatable {
     private double rotationZ = 0;
     private boolean moving = false;
     private PathManager pm;
+    private Stellage child;
 
     private Node curNode;
     private ArrayList<Node> destNodes = new ArrayList<Node>();
@@ -59,6 +60,12 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
+        if(child != null) {
+            x = child.getX();
+            z = child.getZ();
+            y = 1.5;
+        }
+
         calcDeltaTime();
 
         while(destNodes.size() > 0) {
@@ -74,6 +81,10 @@ class Robot implements Object3D, Updatable {
         DirManager();
 
         return true;
+    }
+
+    public void pickUp(Stellage child) {
+        this.child = child;
     }
 
     public void DirManager() {
