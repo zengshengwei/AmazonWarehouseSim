@@ -80,7 +80,10 @@ public class NodePathManager {
                     n.adjacencies.add(nodelist.get(index - gridsizeX)); // get top
 					if(n.x > 0){
 						n.adjacencies.add(nodelist.get(index - 1)); // get left 
-					}
+                    }
+                    if(n.x == 0){
+                        n.adjacencies.add(nodelist.get(index + gridsizeX)); // get bottom
+                    }
 
 				} // if x and z are over boundary [RIGHT CORNER]
 				else if (n.x >= gridsizeX*mult - mult && n.z >= gridsizeZ*mult - mult) {
