@@ -27,6 +27,7 @@ class Robot implements Object3D, Updatable {
     private boolean moving = false;
     private NodePathManager pm;
     private Stellage child;
+    private boolean pickup = true;
 
     private PathNode curNode;
     private ArrayList<PathNode> destNodes = new ArrayList<PathNode>();
@@ -79,18 +80,44 @@ class Robot implements Object3D, Updatable {
     }
 
     public void DirManager() {
-        Random r = new Random();
-        int randIndex = r.nextInt(pm.getNodeList().size()); // laat naar random locaties rennon
-
-        //geef eindpunt en dan beginpunt mee
-        ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(randIndex)); // geef huidige node mee en de target node
-        if(path != null){
-          for (PathNode n : path) {
-              if (n != curNode){
-                GoToAdd(n);
-              }
-          }
+        if(pickup == false){
+            int randomStellage = getRandomStellage();
+            //geef eindpunt en dan beginpunt mee
+            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(randomStellage)); // geef huidige node mee en de target node
+            if(path != null){
+                for (PathNode n : path) {
+                    if (n != curNode){
+                        GoToAdd(n);
+                    }
+                }
+            }
+            pickup = true;
+        }else{
+            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size()-1)); // geef huidige node mee en de target node
+            if(path != null){
+                for (PathNode n : path) {
+                    if (n != curNode){
+                        GoToAdd(n);
+                    }
+                }
+            }
+            pickup = false;
         }
+    }
+
+    public int getRandomStellage(){
+        ArrayList<Integer> stellageIndex = new ArrayList<Integer>();
+        for(PathNode n : pm.getNodeList()){
+            if(n.getIsStellage()){
+                int e = pm.getNodeList().indexOf(n);
+                stellageIndex.add(e);
+            }
+        }
+        Random r = new Random();
+        int randIndex = r.nextInt(stellageIndex.size()); // laat naar random locaties rennon
+        int value = stellageIndex.get(randIndex).intValue();
+
+        return value;
     }
 
     public void GoToAdd(int x, int y) {
