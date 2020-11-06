@@ -3,7 +3,6 @@ package com.nhlstenden.amazonsimulatie.models;
 import com.nhlstenden.amazonsimulatie.dijkstra.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -28,6 +27,7 @@ class Robot implements Object3D, Updatable {
     private NodePathManager pm;
     private Stellage child;
     private boolean pickup = true;
+    private boolean task = false;
 
     private PathNode curNode;
     private ArrayList<PathNode> destNodes = new ArrayList<PathNode>();
@@ -35,9 +35,11 @@ class Robot implements Object3D, Updatable {
     private double localDeltaTime;
     private long last_time = System.nanoTime();
 
-    public Robot(NodePathManager pm) {
+    public Robot(NodePathManager pm, Boolean task) {
         this.uuid = UUID.randomUUID();
         this.pm = pm;
+
+        this.task = task;
 
         PathNode n = pm.getNodeList().get(0);
 
@@ -80,25 +82,38 @@ class Robot implements Object3D, Updatable {
     }
 
     public void DirManager() {
-        if(pickup == false){
-            int randomStellage = getRandomStellage();
-            //geef eindpunt en dan beginpunt mee
-            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(randomStellage)); // geef huidige node mee en de target node
-            if(path != null){
-                for (PathNode n : path) {
-                    if (n != curNode){
-                        GoToAdd(n);
-                    }
+        if(!pickup && child == null){ // on way to stellage
+
+            for (PathNode pathNode : pm.getNodeList()) {
+                if(pathNode.getIsStellage()) {
+                    if(this.task) { 
+                        if(pathNode.stellage != null) {
+                            ArrayList<PathNode> path = pm.GetPath(this.curNode, pathNode); // geef huidige node mee en de target node
+                            for (PathNode n : path) {
+                                if (n != curNode){
+                                    GoToAdd(n);
+                                }
+                            }
+                        }
+                    }else {
+                        if(pathNode.stellage == null) {
+                            ArrayList<PathNode> path = pm.GetPath(this.curNode, pathNode); // geef huidige node mee en de target node
+                            for (PathNode n : path) {
+                                if (n != curNode){
+                                    GoToAdd(n);
+                                }
+                            }
+                        }
+                    }   
                 }
             }
             pickup = true;
-        }else{
-            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size()-1)); // geef huidige node mee en de target node
-            if(path != null){
-                for (PathNode n : path) {
-                    if (n != curNode){
-                        GoToAdd(n);
-                    }
+
+        }else if(pickup) {
+            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size() - 1)); // geef huidige node mee en de target node
+            for (PathNode n : path) {
+                if (n != curNode){
+                    GoToAdd(n);
                 }
             }
             pickup = false;
@@ -147,7 +162,7 @@ class Robot implements Object3D, Updatable {
                 this.z += dirZ * speed * elapsed * localDeltaTime;
                 
 
-                if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
+                if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) { // arrived on dest
                     this.x = n.x;
                     this.z = n.z;
                     moving = false;

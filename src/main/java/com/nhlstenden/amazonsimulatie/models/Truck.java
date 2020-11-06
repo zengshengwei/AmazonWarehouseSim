@@ -1,6 +1,4 @@
 package com.nhlstenden.amazonsimulatie.models;
-import com.nhlstenden.amazonsimulatie.dijkstra.PathNode;
-
 import java.util.UUID;
 import java.util.ArrayList;
 
@@ -17,8 +15,6 @@ public class Truck implements Object3D, Updatable {
     private double rotationY = 0;
     private double rotationZ = 0;
 
-    private ArrayList<PathNode> destNodes = new ArrayList<PathNode>();
-    private PathNode curNode;
     private long last_time = System.nanoTime();
     private ArrayList<Integer> destX = new ArrayList<Integer>();
     private ArrayList<Integer> destY = new ArrayList<Integer>();
