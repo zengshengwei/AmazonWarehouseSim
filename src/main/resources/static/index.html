@@ -49,20 +49,19 @@
                 light.intensity = 4;
                 scene.add(light);
 
-                //loadModel('3Dmodels/Truck_1359.gltf');
-                //loadModel('3Dmodels/warehouse obj.gltf', 0, 0, 20);
-                loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 15);
-
                 window.addEventListener('resize', onWindowResize, false);
+                loadModel('3Dmodels/Truck_1359.gltf', 80, 25, 0.25);
+                loadModel('3Dmodels/warehouse obj.gltf', 3, 50, 5);
+                loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 3.75);
             }
 
-            function loadModel(root, posx = 0, posy = 0, scale = 1) {
+            function loadModel(root, posx = a, posy = b, scale = c) {
                 gltfLoader.load(root, function (gltf) {
-                    truck = gltf.scene.children[0];
-                    truck.scale.set(scale, scale, scale); 
-                    truck.rotation.y = Math.PI / 1.0;                          
-                    truck.position.x = posx;
-                    truck.position.z = posy;
+                    model = gltf.scene.children[0];
+                    model.scale.set(scale, scale, scale); 
+                    model.rotation.y = Math.PI / 1.0;                          
+                    model.position.x = posx;
+                    model.position.z = posy;
                     scene.add(gltf.scene);
                     animate();
                 });

@@ -36,7 +36,7 @@ public class World implements Model {
     public World() {
         this.worldObjects = new ArrayList<>();
         pm = new NodePathManager();
-        CreateGrid(10, 10, 10);
+        //CreateGrid(10, 10, 10);
 
         pm.CreateNodes(6, 9, nodeList);
         pm.assignEdges(nodeList);
