@@ -51,13 +51,13 @@ public class NodePathManager {
 					n.adjacencies.add(nodelist.get(index - gridsizeX));
 				}
 				// if within boundary
-				else if (n.x < gridsizeX * mult - 1*mult && n.z < gridsizeZ * mult - 1*mult) {
-					if(!n.getIsStellage()) {
+				else if (n.x < gridsizeX * mult - mult && n.z < gridsizeZ * mult - mult) {
+					if(!n.getIsStellage() && !nodelist.get(index + 1).getIsStellage()) {
 						n.adjacencies.add(nodelist.get(index + 1)); // get right
 					} 
 					n.adjacencies.add(nodelist.get(index + gridsizeX)); // get bottom
 					
-					if (n.x > 0 && !n.getIsStellage()) { // if there is node to the left
+					if (n.x > 0 && !nodelist.get(index + 1).getIsStellage()) { // if there is node to the left
 						n.adjacencies.add(nodelist.get(index - 1)); // get left 
 					}
 					if (n.z > 0) { // if there is node up top
@@ -65,18 +65,25 @@ public class NodePathManager {
 					}
 
 				} // if x is over boundary [MOST RIGHT ROW]
-				else if (n.x >= gridsizeX*mult - 1*mult && n.z < gridsizeZ*mult - 1*mult && gridsizeZ*mult > 0) {
-					n.adjacencies.add(nodelist.get(index + gridsizeX)); // get bottom
+				else if (n.x >= gridsizeX*mult - mult && n.z < gridsizeZ*mult - mult) {
+                    n.adjacencies.add(nodelist.get(index + gridsizeX)); // get bottom
+                    if(!nodelist.get(index - 1).getIsStellage()){
+                        n.adjacencies.add(nodelist.get(index - 1)); // get left 
+                    }
+                    if(n.z > 0){
+                        n.adjacencies.add(nodelist.get(index - gridsizeX)); // get top
+                    }
 
 				} // if z is over boundary [BOTTOM ROW]
-				else if (n.z >= gridsizeZ*mult - 1*mult && n.x < gridsizeX*mult - 1*mult && gridsizeX*mult > 0) {
-					n.adjacencies.add(nodelist.get(index + 1)); // get right
-					if(n.x == 0 || n.x == gridsizeZ*mult -1*mult){
+				else if (n.z >= gridsizeZ*mult - mult && n.x < gridsizeX*mult - mult) {
+                    n.adjacencies.add(nodelist.get(index + 1)); // get right
+                    n.adjacencies.add(nodelist.get(index - gridsizeX)); // get top
+					if(n.x > 0){
 						n.adjacencies.add(nodelist.get(index - 1)); // get left 
 					}
 
 				} // if x and z are over boundary [RIGHT CORNER]
-				else if (n.x >= gridsizeX*mult - 1*mult && n.z >= gridsizeZ*mult - 1*mult) {
+				else if (n.x >= gridsizeX*mult - mult && n.z >= gridsizeZ*mult - mult) {
 					n.adjacencies.add(nodelist.get(index - 1)); // get left 
 					n.adjacencies.add(nodeList.get(index - gridsizeX)); // get top neighbour
 				}
