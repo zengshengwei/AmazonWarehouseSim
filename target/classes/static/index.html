@@ -50,7 +50,7 @@
                 scene.add(light);
 
                 window.addEventListener('resize', onWindowResize, false);
-                loadModel('3Dmodels/Truck_1359.gltf', 80, 25, 0.25);
+                //loadModel('3Dmodels/Truck_1359.gltf', 80, 25, 0.25);
                 loadModel('3Dmodels/warehouse obj.gltf', 3, 50, 5);
                 loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 3.75);
             }
@@ -111,6 +111,15 @@
 
                             var group = new THREE.Group();
                             group.add(robot);
+
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
+                        }
+                        if (command.parameters.type == "truck") {
+                            var model = loadModel('3Dmodels/Truck_1359.gltf', 80, 25, 0.25);
+
+                            var group = new THREE.Group();
+                            group.add(model);
 
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
