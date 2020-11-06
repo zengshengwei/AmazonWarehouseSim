@@ -1,5 +1,4 @@
 package com.nhlstenden.amazonsimulatie.models;
-import com.nhlstenden.amazonsimulatie.dijkstra.*;
 
 import java.util.UUID;
 
