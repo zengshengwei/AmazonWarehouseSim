@@ -40,7 +40,7 @@ class Robot implements Object3D, Updatable {
 
         PathNode n = pm.getNodeList().get(0);
 
-        //GoToAdd(n); // drive to origin first to begin 
+        GoToAdd(n); // drive to origin first to begin 
     }
 
     /*
@@ -115,7 +115,7 @@ class Robot implements Object3D, Updatable {
             startZ = this.z;
             moving = true;
 
-            if (moving) {
+            while (moving) {
                 this.x += dirX * speed * elapsed * localDeltaTime;
                 this.z += dirZ * speed * elapsed * localDeltaTime;
                 

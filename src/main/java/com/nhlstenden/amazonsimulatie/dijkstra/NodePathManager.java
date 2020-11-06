@@ -7,10 +7,10 @@ public class NodePathManager {
     private int gridsizeX, gridsizeZ;
     int mult = 10;
     
-    public NodePathManager() {
-        CreateNodes(6, 9, nodeList);
-        assignEdges(nodeList);
-    }
+    // public NodePathManager() {
+    //     CreateNodes(6, 9, nodeList);
+    //     assignEdges(nodeList);
+    // }
 
     public void CreateNodes(int x, int z, ArrayList<PathNode> nodelist) {
 		this.nodeList = nodelist;
@@ -132,6 +132,7 @@ public class NodePathManager {
             path.add(currentShortestPath);
             cur = currentShortestPath;
         }
+        Collections.reverse(path);
         return path;
     }
 

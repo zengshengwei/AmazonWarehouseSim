@@ -38,6 +38,9 @@ public class World implements Model {
         pm = new NodePathManager();
         CreateGrid(10, 10, 10);
 
+        pm.CreateNodes(6, 9, nodeList);
+        pm.assignEdges(nodeList);
+
         // robots krijgen een PathManager mee
         this.worldObjects.add(new Robot(pm));
 
