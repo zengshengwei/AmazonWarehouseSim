@@ -43,6 +43,8 @@ public class World implements Model {
 
         // robots krijgen een PathManager mee
         this.worldObjects.add(new Robot(pm));
+        // truck krijgt geen PathManager mee
+        this.worldObjects.add(new Truck());
 
         for(int i = 0; i < pm.getNodeList().size(); i++) {
             if(pm.getNodeList().get(i).getIsStellage()) {
