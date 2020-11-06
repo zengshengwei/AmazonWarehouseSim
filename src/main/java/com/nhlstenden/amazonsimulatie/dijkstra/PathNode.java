@@ -4,8 +4,11 @@ import java.util.*;
 
 public class PathNode implements Object3D, Updatable{
 	private UUID uuid;
-    public double x,y,z;
-    private ArrayList<PathNode> connectedNodes = new ArrayList<PathNode>();
+    public double x,y,z, rotationX, rotationY, rotationZ;
+    public ArrayList<PathNode> adjacencies = new ArrayList<PathNode>();
+
+    private boolean isStellage = false;
+	public Stellage stellage = null;
 
 
     public PathNode(){
@@ -14,60 +17,66 @@ public class PathNode implements Object3D, Updatable{
 
     @Override
     public boolean update() {
-        // TODO Auto-generated method stub
         return false;
     }
 
+    public boolean getIsStellage() {
+		return isStellage;
+    }
+    
+    public void addStellage(Stellage s) {
+        stellage = s;
+    }
+
+	public void setIsStellage(boolean b) {
+		isStellage = b;
+	}
+
     public ArrayList<PathNode> getConnectedNodes() {
-        return connectedNodes;
+        return adjacencies;
     }
 
     @Override
     public String getUUID() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String getType() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.uuid.toString();
     }
 
     @Override
     public double getX() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.x;
     }
 
     @Override
     public double getY() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.y;
     }
 
     @Override
     public double getZ() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.z;
     }
 
     @Override
     public double getRotationX() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.rotationX;
     }
 
     @Override
     public double getRotationY() {
-        // TODO Auto-generated method stub
-        return 0;
+        return this.rotationY;
     }
 
     @Override
     public double getRotationZ() {
-        // TODO Auto-generated method stub
-        return 0;
+        return rotationZ;
     }
-    
+	@Override
+	public String getType() {
+		if(isStellage == true){
+			return "true";
+		}else{
+		return "false";
+		}
+		//return Node.class.getSimpleName().toLowerCase();
+	}
 }

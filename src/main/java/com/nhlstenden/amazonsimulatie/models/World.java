@@ -21,26 +21,22 @@ public class World implements Model {
      * een lijst van Object3D onderdelen. Deze kunnen in principe alles zijn. (Robots, vrachrtwagens, etc)
      */
     private List<Object3D> worldObjects;
-    PathManager pm;
+    NodePathManager pm;
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
      * Het systeem werkt al as-is, dus dit hoeft niet aangepast te worden.
      */
     PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private static ArrayList<Node> nodeList = new ArrayList<Node>();
+    private static ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
     /*
      * De wereld maakt een lege lijst voor worldObjects aan. Daarin wordt nu één robot gestopt.
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
      */
     public World() {
         this.worldObjects = new ArrayList<>();
-        pm = new PathManager();
+        pm = new NodePathManager();
         CreateGrid(10, 10, 10);
-
-        // geef een lengte en breedte mee en een nodelist
-        pm.CreateNodes(6, 9, nodeList);
-		pm.assignEdges(nodeList);
 
         // robots krijgen een PathManager mee
         this.worldObjects.add(new Robot(pm));
@@ -53,7 +49,7 @@ public class World implements Model {
             }
         }
 
-        for(Node n : nodeList){
+        for(PathNode n : nodeList){
             this.worldObjects.add((n));
         }
     }

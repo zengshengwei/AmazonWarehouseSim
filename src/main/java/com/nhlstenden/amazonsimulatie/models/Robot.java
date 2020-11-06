@@ -25,25 +25,22 @@ class Robot implements Object3D, Updatable {
     private double rotationY = 0;
     private double rotationZ = 0;
     private boolean moving = false;
-    private PathManager pm;
+    private NodePathManager pm;
     private Stellage child;
 
-    private Node curNode;
-    private ArrayList<Node> destNodes = new ArrayList<Node>();
+    private PathNode curNode;
+    private ArrayList<PathNode> destNodes = new ArrayList<PathNode>();
 
     private double localDeltaTime;
     private long last_time = System.nanoTime();
 
-    public Robot(PathManager pm) {
+    public Robot(NodePathManager pm) {
         this.uuid = UUID.randomUUID();
         this.pm = pm;
 
-        Node n = pm.getNodeList().get(0);
+        PathNode n = pm.getNodeList().get(0);
 
-        // do computepath here
-        pm.computePaths(n); // geef huidige node mee
-
-        GoToAdd(n); // drive to origin first to begin 
+        //GoToAdd(n); // drive to origin first to begin 
     }
 
     /*
@@ -86,9 +83,9 @@ class Robot implements Object3D, Updatable {
         int randIndex = r.nextInt(pm.getNodeList().size()); // laat naar random locaties rennon
 
         //geef eindpunt en dan beginpunt mee
-        List<Node> path = pm.getShortestPathTo(pm.getNodeList(), pm.getNodeList().get(randIndex), this.curNode); // geef huidige node mee en de target node
+        ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(randIndex)); // geef huidige node mee en de target node
         if(path != null){
-          for (Node n : path) {
+          for (PathNode n : path) {
               if (n != curNode){
                 GoToAdd(n);
               }
@@ -101,11 +98,11 @@ class Robot implements Object3D, Updatable {
         destY.add(y);
     }
 
-    public void GoToAdd(Node n) {
+    public void GoToAdd(PathNode n) {
         destNodes.add(n);
     }
 
-    public void GoToVector2(Node n) {
+    public void GoToVector2(PathNode n) {
         if(n.x != this.x || n.z != this.x){
             double speed = 10;
             double elapsed = 0.01f;
