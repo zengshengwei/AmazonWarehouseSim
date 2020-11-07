@@ -8,7 +8,7 @@ import com.nhlstenden.amazonsimulatie.models.Object3D;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-import com.nhlstenden.amazonsimulatie.dijkstra.Node;
+import com.nhlstenden.amazonsimulatie.dijkstra.*;
 
 /*
  * Deze class is de standaard websocketview. De class is een andere variant
@@ -59,26 +59,41 @@ public class DefaultWebSocketView implements View {
      * Deze methode maakt van een Object3D object een JSON pakketje om verstuurd te worden
      * naar de client.
      */
-    private String jsonifyObject3D(Object3D object) {
-        if(object.getType() != "node") {
-            return  "{" 
-            + surroundString("uuid") + ":" + surroundString(object.getUUID()) + ","
-            + surroundString("type") + ":" + surroundString(object.getType()) + ","
-            + surroundString("x") + ":" + object.getX() + ","
-            + surroundString("y") + ":" + object.getY() + ","
-            + surroundString("z") + ":" + object.getZ() + ","
-            + surroundString("rotationX") + ":" + object.getRotationX() + ","
-            + surroundString("rotationY") + ":" + object.getRotationY() + ","
-            + surroundString("rotationZ") + ":" + object.getRotationZ()
-          + "}";
-        }
-        else {
-            Node n = (Node)object;
+    // private String jsonifyObject3D(Object3D object) {
+    //     if(object.getType() != "node") {
+    //         return  "{" 
+    //         + surroundString("uuid") + ":" + surroundString(object.getUUID()) + ","
+    //         + surroundString("type") + ":" + surroundString(object.getType()) + ","
+    //         + surroundString("x") + ":" + object.getX() + ","
+    //         + surroundString("y") + ":" + object.getY() + ","
+    //         + surroundString("z") + ":" + object.getZ() + ","
+    //         + surroundString("rotationX") + ":" + object.getRotationX() + ","
+    //         + surroundString("rotationY") + ":" + object.getRotationY() + ","
+    //         + surroundString("rotationZ") + ":" + object.getRotationZ()
+    //       + "}";
+    //     }
+    //     else {
+    //         PathNode n = (PathNode)object;
  
-            return  "{" 
+    //         return  "{" 
+    //             + surroundString("uuid") + ":" + surroundString(object.getUUID()) + ","
+    //             + surroundString("type") + ":" + surroundString(object.getType()) + ","
+    //             + surroundString("isStellage") + ":" + surroundString(String.valueOf(n.getIsStellage())) + ","
+    //             + surroundString("x") + ":" + object.getX() + ","
+    //             + surroundString("y") + ":" + object.getY() + ","
+    //             + surroundString("z") + ":" + object.getZ() + ","
+    //             + surroundString("rotationX") + ":" + object.getRotationX() + ","
+    //             + surroundString("rotationY") + ":" + object.getRotationY() + ","
+    //             + surroundString("rotationZ") + ":" + object.getRotationZ()
+    //           + "}";
+    //     }
+        
+    // }
+
+    private String jsonifyObject3D(Object3D object) {
+        return  "{" 
                 + surroundString("uuid") + ":" + surroundString(object.getUUID()) + ","
                 + surroundString("type") + ":" + surroundString(object.getType()) + ","
-                + surroundString("isStellage") + ":" + surroundString(String.valueOf(n.getIsStellage())) + ","
                 + surroundString("x") + ":" + object.getX() + ","
                 + surroundString("y") + ":" + object.getY() + ","
                 + surroundString("z") + ":" + object.getZ() + ","
@@ -86,8 +101,6 @@ public class DefaultWebSocketView implements View {
                 + surroundString("rotationY") + ":" + object.getRotationY() + ","
                 + surroundString("rotationZ") + ":" + object.getRotationZ()
               + "}";
-        }
-        
     }
 
     private String surroundString(String s) {

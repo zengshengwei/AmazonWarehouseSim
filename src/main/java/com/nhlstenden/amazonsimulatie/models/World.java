@@ -42,9 +42,9 @@ public class World implements Model {
         pm.assignEdges(nodeList);
 
         // robots krijgen een PathManager mee
-        this.worldObjects.add(new Robot(pm));
+        this.worldObjects.add(new Robot(pm, true));
         // truck krijgt geen PathManager mee
-        this.worldObjects.add(new Truck());
+        //this.worldObjects.add(new Truck());
 
         for(int i = 0; i < pm.getNodeList().size(); i++) {
             if(pm.getNodeList().get(i).getIsStellage()) {
