@@ -49,7 +49,10 @@ public class World implements Model {
             if(pm.getNodeList().get(i).getIsStellage()) {
                 Stellage s = new Stellage();
                 pm.getNodeList().get(i).addStellage(s);
-               // this.worldObjects.add(s);
+                s.x = pm.getNodeList().get(i).getX();
+                s.z = pm.getNodeList().get(i).getZ();
+                s.y = pm.getNodeList().get(i).getY();
+                this.worldObjects.add(s);
             }
         }
 

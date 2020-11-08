@@ -68,10 +68,13 @@ public class PathNode implements Object3D, Updatable{
 
     @Override
     public double getRotationZ() {
-        return rotationZ;
+        return this.rotationZ;
     }
 	@Override
 	public String getType() {
+        if(isStellage){
+            return "true";
+        }
         return PathNode.class.getSimpleName().toLowerCase();
 	}
 }

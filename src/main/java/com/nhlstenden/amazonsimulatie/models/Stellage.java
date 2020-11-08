@@ -5,15 +5,7 @@ import java.util.UUID;
 public class Stellage implements Object3D, Updatable {
     private UUID uuid;
 
-    private double x = 0;
-    private double y = 0;
-    private double z = 0;
-
-    private double rotationX = 0;
-    private double rotationY = 0;
-    private double rotationZ = 0;
-
-
+    public double x,y,z, rotationX, rotationY, rotationZ;
 
     public Stellage() {
         this.uuid = UUID.randomUUID();
@@ -21,8 +13,7 @@ public class Stellage implements Object3D, Updatable {
 
     @Override
     public boolean update() {
-
-        return true;
+        return false;
     }
 
     @Override

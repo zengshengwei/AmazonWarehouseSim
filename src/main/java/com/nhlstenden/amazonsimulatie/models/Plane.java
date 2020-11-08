@@ -73,7 +73,7 @@ class Plane implements Object3D, Updatable {
 
     @Override
     public double getRotationZ() {
-        return rotationZ;
+        return this.rotationZ;
     }
 
     @Override

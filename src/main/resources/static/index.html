@@ -44,6 +44,12 @@
                 renderer.setSize(window.innerWidth, window.innerHeight + 5);
                 document.body.appendChild(renderer.domElement);
                 
+                //simpele grond zodat warehouse niet hoeft te worden ingeladen
+                const geometry = new THREE.PlaneGeometry( 300, 300, 0 );
+                const material = new THREE.MeshBasicMaterial( {color: 0xffff00, side: THREE.DoubleSide} );
+                const plane = new THREE.Mesh( geometry, material );
+                plane.rotation.x = Math.PI / 2;
+                scene.add( plane );
                 
 
                 var light = new THREE.AmbientLight(0x404040);
@@ -142,12 +148,12 @@
                         if (command.parameters.type == "stellage") {
                             var geometry = new THREE.BoxGeometry(3, 3, 3);
                             var nodeMaterials = [
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //LEFT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //RIGHT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //TOP
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //BOTTOM
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //FRONT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //BACK
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
                             ];
                             var material = new THREE.MeshFaceMaterial(nodeMaterials);
                             var stellage = new THREE.Mesh(geometry, material);
@@ -159,7 +165,7 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
-                        if (command.parameters.type == "pathnode") {
+                        if (command.parameters.type == "false") {
                             var geometry = new THREE.BoxGeometry(3, 3, 3);
                             var nodeMaterials = [
                                 new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //LEFT
