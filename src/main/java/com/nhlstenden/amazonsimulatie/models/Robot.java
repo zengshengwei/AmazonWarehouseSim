@@ -28,6 +28,7 @@ class Robot implements Object3D, Updatable {
     private NodePathManager pm;
     private Stellage child;
     private boolean pickup = true;
+    private boolean task = false;
 
     private PathNode curNode;
     private ArrayList<PathNode> destNodes = new ArrayList<PathNode>();
@@ -35,9 +36,12 @@ class Robot implements Object3D, Updatable {
     private double localDeltaTime;
     private long last_time = System.nanoTime();
 
-    public Robot(NodePathManager pm) {
+    public Robot(NodePathManager pm, Boolean task) {
         this.uuid = UUID.randomUUID();
         this.pm = pm;
+
+
+        this.task = task;
 
         PathNode n = pm.getNodeList().get(0);
 
@@ -64,12 +68,42 @@ class Robot implements Object3D, Updatable {
 
         calcDeltaTime();
 
-        while(destNodes.size() > 0) {
-            GoToVector2(destNodes.get(0));
+        if(destNodes.size() > 0) {
+            PathNode n = destNodes.get(0);
+            if(n.x == this.x && n.z == this.z){
+                destNodes.remove(n);
+                curNode = n;
+            }
+            else{
+                double speed = 100;
+                double elapsed = 0.01f;
+                double startX, startZ;
+    
+                double distance = Math.sqrt(Math.pow(n.x - this.x, 2) + Math.pow(n.z - this.z, 2));
+                double dirX = (n.x - this.x) / distance;
+                double dirZ = (n.z - this.z) / distance;
+                startX = this.x;
+                startZ = this.z;
+                moving = true;
+    
+                if (moving) {
+                    this.x += dirX * speed * elapsed ;
+                    this.z += dirZ * speed * elapsed ;
+    
+                    if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
+                        this.x = n.x;
+                        this.z = n.z;
+                        moving = false;
+                        destNodes.remove(n);
+                        curNode = n;
+                    }
+                }
+            } 
+
+            return true;
         }
         // if (destX.size() != 0 && destY.size() != 0)
         //     GoToVector2(destX.get(0), destY.get(0));
-
         DirManager();
 
         return true;
@@ -80,7 +114,7 @@ class Robot implements Object3D, Updatable {
     }
 
     public void DirManager() {
-        if(pickup == false){
+        if(!pickup && child == null){
             int randomStellage = getRandomStellage();
             //geef eindpunt en dan beginpunt mee
             ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(randomStellage)); // geef huidige node mee en de target node
@@ -147,7 +181,7 @@ class Robot implements Object3D, Updatable {
                 this.z += dirZ * speed * elapsed * localDeltaTime;
                 
 
-                if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
+                if (Math.sqrt(Math.pow(Math.abs(this.x - startX), 2) + Math.pow(Math.abs(this.z - startZ), 2)) >= distance) {
                     this.x = n.x;
                     this.z = n.z;
                     moving = false;

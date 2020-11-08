@@ -50,9 +50,9 @@
                 scene.add(light);
 
                 window.addEventListener('resize', onWindowResize, false);
-                loadModel('3Dmodels/Truck_1359.gltf', 80, 25, 0.25);
+                //loadModel('3Dmodels/Truck_1359.gltf', 80, 25, 0.25);
                 //loadModel('3Dmodels/warehouse obj.gltf', 3, 50, 5);
-                loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 3.75);
+                //loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 3.75);
             }
 
             function loadModel(root, posx = a, posy = b, scale = c) {
@@ -115,6 +115,19 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
+                        // if(command.parameters.type == "truck") {
+                        //     var texture = new THREE.TextureLoader().load('textures/rocks.png');
+                        //     var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
+                        //     var geometry = new THREE.PlaneGeometry(10, 10, 32);
+                        //     var plane = new THREE.Mesh(geometry, material);
+                        //     plane.rotation.x = Math.PI / 2.0;
+
+                        //     var group = new THREE.Group();
+                        //     group.add(plane);
+
+                        //     scene.add(group);
+                        //     worldObjects[command.parameters.uuid] = group;
+                        // }
                         if(command.parameters.type == "plane") {
                             var texture = new THREE.TextureLoader().load('textures/rocks.png');
                             var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
