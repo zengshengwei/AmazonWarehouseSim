@@ -7,13 +7,29 @@ public class Stellage implements Object3D, Updatable {
 
     public double x,y,z, rotationX, rotationY, rotationZ;
 
+    public boolean isEmpty = false;
+
     public Stellage() {
         this.uuid = UUID.randomUUID();
     }
 
+    public boolean getIsEmpty(){
+        return isEmpty;
+    }
+
+    public void setIsEmpty(){
+        if(isEmpty){
+            y += 10;
+            isEmpty = false;
+        }else{
+            y -= 10;
+            isEmpty = true;
+        }
+    }
+
     @Override
     public boolean update() {
-        return false;
+        return true;
     }
 
     @Override
