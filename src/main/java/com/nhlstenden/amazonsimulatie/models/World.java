@@ -36,7 +36,7 @@ public class World implements Model {
     public World() {
         this.worldObjects = new ArrayList<>();
         pm = new NodePathManager();
-        CreateGrid(10, 10, 10);
+        //CreateGrid(10, 10, 10);
 
         pm.CreateNodes(6, 9, nodeList);
         pm.assignEdges(nodeList);
@@ -59,26 +59,26 @@ public class World implements Model {
         }
     }
 
-    public void CreateGrid(int width, int height, int tilesize) {
-        for(int w = 0; w < width; w++) {
-            for(int h = 0; h < height; h++) {
-                boolean isdark = false;
-                if(h % 2 == 0) {
-                    if(w % 2 == 2) 
-                        isdark = true;
-                    else
-                        isdark = false;
-                }else {
-                    if(h % 2 == 0)
-                        isdark = false;
-                    else
-                        isdark = true;
-                }
+    // public void CreateGrid(int width, int height, int tilesize) {
+    //     for(int w = 0; w < width; w++) {
+    //         for(int h = 0; h < height; h++) {
+    //             boolean isdark = false;
+    //             if(h % 2 == 0) {
+    //                 if(w % 2 == 2) 
+    //                     isdark = true;
+    //                 else
+    //                     isdark = false;
+    //             }else {
+    //                 if(h % 2 == 0)
+    //                     isdark = false;
+    //                 else
+    //                     isdark = true;
+    //             }
 
-                this.worldObjects.add(new Plane(w * tilesize, h * tilesize, tilesize, isdark));
-            }
-        }
-    }
+    //             this.worldObjects.add(new Plane(w * tilesize, h * tilesize, tilesize, isdark));
+    //         }
+    //     }
+    // }
 
     // Hier moet een grid met nodes komen. Die wordt doorgestuurd
     // naar de robots.
