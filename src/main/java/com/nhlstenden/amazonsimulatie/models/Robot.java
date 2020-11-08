@@ -70,7 +70,7 @@ public class Robot implements Object3D, Updatable {
             child.setPos(x, 1.5, z);
         }
 
-        calcDeltaTime();
+        //calcDeltaTime();
 
         if(destNodes.size() > 0) {
             PathNode n = destNodes.get(0);

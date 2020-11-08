@@ -100,9 +100,17 @@ public class Truck implements Object3D, Updatable {
         return this.rotationX;
     }
 
+    public void setRotationX(double rotationX) {
+        this.rotationX = rotationX;
+    }
+
     @Override
     public double getRotationY() {
         return this.rotationY;
+    }
+
+    public void setRotationY(double rotationY) {
+        this.rotationY = rotationY;
     }
 
     @Override
@@ -110,4 +118,7 @@ public class Truck implements Object3D, Updatable {
         return this.rotationZ;
     }
     
+    public void setRotationZ(double rotationZ) {
+        this.rotationZ = rotationZ;
+    }
 }

@@ -49,7 +49,7 @@ public class NodePathManager {
 			for (PathNode n : nodelist) {
 				int index = nodelist.indexOf(n); // get index
 
-				if(index == nodelist.size() -1) { // last one [DROPOFF POINT]
+                if(index == nodelist.size() -1) { // last one [DROPOFF POINT]
 					n.adjacencies.add(nodelist.get(index - gridsizeX));
 				}
 				// if within boundary

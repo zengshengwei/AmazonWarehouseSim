@@ -44,10 +44,12 @@
                 renderer.setSize(window.innerWidth, window.innerHeight + 5);
                 document.body.appendChild(renderer.domElement);
                 
-                const geometry = new THREE.PlaneGeometry( 300, 300, 0 );
+                const geometry = new THREE.PlaneGeometry( 120, 70, 0 );
                 const material = new THREE.MeshBasicMaterial( {color: 0xff00, side: THREE.DoubleSide} );
                 const plane = new THREE.Mesh( geometry, material );
                 plane.rotation.x = Math.PI / 2;
+                plane.position.x = 50;
+                plane.position.z = 50;
                 scene.add( plane );
 
                 var light = new THREE.AmbientLight(0x404040);
@@ -60,18 +62,18 @@
                 //loadModel('3Dmodels/ANAQUEL LISO AL120.gltf', 3, 6, 3.75);
             }
 
-            function loadModel(root, posx = a, posy = b, scale = c) {
+            function loadModel(root, posx = a, posy = b, scale = c, roty = d) {
                 gltfLoader.load(root, function (gltf) {
                     model = gltf.scene.children[0];
                     model.scale.set(scale, scale, scale); 
-                    model.rotation.y = Math.PI / 1.0;                          
+                    model.rotation.y = (Math.PI / 1.0) + roty;                          
                     model.position.x = posx;
                     model.position.z = posy;
                     scene.add(gltf.scene);
                     animate();
                     return model;
                 });
-            }
+            } 
 
             function onWindowResize() {
                 camera.aspect = window.innerWidth / window.innerHeight;
@@ -122,7 +124,7 @@
                             worldObjects[command.parameters.uuid] = group;
                         }
                         if (command.parameters.type == "truck") {
-                            var model = loadModel('3Dmodels/Truck_1359.gltf', 80, 25, 0.25);
+                            var model = loadModel('3Dmodels/Truck_1359.gltf', 0, 95, 0.25, 55);
 
                             var group = new THREE.Group();
                             group.add(model);
@@ -146,12 +148,12 @@
                         if (command.parameters.type == "stellage") {
                             var geometry = new THREE.BoxGeometry(3, 3, 3);
                             var nodeMaterials = [
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //LEFT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //RIGHT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //TOP
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //BOTTOM
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //FRONT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //BACK
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.jpg"), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.jpg"), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.jpg"), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.jpg"), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.jpg"), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.jpg"), side: THREE.DoubleSide }), //BACK
                             ];
                             var material = new THREE.MeshFaceMaterial(nodeMaterials);
                             var stellage = new THREE.Mesh(geometry, material);
@@ -166,12 +168,12 @@
                         if (command.parameters.type == "false") {
                             var geometry = new THREE.BoxGeometry(3, 3, 3);
                             var nodeMaterials = [
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //LEFT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //RIGHT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //TOP
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //BOTTOM
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //FRONT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //BACK
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.png"), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.png"), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.png"), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.png"), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.png"), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/doos.png"), side: THREE.DoubleSide }), //BACK
                             ];
                             var material = new THREE.MeshFaceMaterial(nodeMaterials);
                             var node = new THREE.Mesh(geometry, material);
