@@ -1,18 +1,21 @@
 //package com.nhlstenden.amazonsimulatie.tests;
 
-import com.nhlstenden.amazonsimulatie.models.Model;
-import com.nhlstenden.amazonsimulatie.models.Object3D;
+import com.nhlstenden.amazonsimulatie.models.*;
 import com.nhlstenden.amazonsimulatie.views.DefaultWebSocketView;
+import com.nhlstenden.amazonsimulatie.dijkstra.PathNode;
 import com.nhlstenden.amazonsimulatie.dijkstra.NodePathManager;
 
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.springframework.util.Assert;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
@@ -27,7 +30,19 @@ public class DefaultWebSocketViewTests {
      * Om de test het beste te begrijpen, begin je vanaf comment #1.
      */
     @Test
-
+    public void testgetDistance(){
+        NodePathManager pm = new NodePathManager();
+        Pathnode a = new Pathnode();
+        Pathnode b = new Pathnode();
+        a.x = 0;
+        a.y = 0;
+        a.z = 0;
+        b.x = 10;
+        b.y = 0;
+        b.z = 0;
+        final float distance = pm.getDistance(a,b);
+        final float expected = 10.0f;
+        assertSame(distance, expected);
     }
 	public void testUpdateSignal() throws Exception {
         /**
