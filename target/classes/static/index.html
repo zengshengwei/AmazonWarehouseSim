@@ -23,15 +23,16 @@
             var camera, scene, renderer;
             var cameraControls;
             let gltfLoader;
-
             var worldObjects = {};
 
             function init() {
                 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
                 cameraControls = new THREE.OrbitControls(camera);
+
                 camera.position.z = 15;
                 camera.position.y = 5;
                 camera.position.x = 15;
+
                 cameraControls.update();
                 scene = new THREE.Scene();
 
@@ -64,6 +65,7 @@
                     model.position.z = posy;
                     scene.add(gltf.scene);
                     animate();
+                    return model;
                 });
             }
 
@@ -115,6 +117,7 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
+<<<<<<< HEAD
                         // if(command.parameters.type == "truck") {
                         //     var texture = new THREE.TextureLoader().load('textures/rocks.png');
                         //     var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
@@ -128,6 +131,17 @@
                         //     scene.add(group);
                         //     worldObjects[command.parameters.uuid] = group;
                         // }
+=======
+                        if (command.parameters.type == "truck") {
+                            var model = loadModel('3Dmodels/Truck_1359.gltf', 80, 25, 0.25);
+
+                            var group = new THREE.Group();
+                            group.add(model);
+
+                            scene.add(group);
+                            worldObjects[command.parameters.uuid] = group;
+                        }
+>>>>>>> main
                         if(command.parameters.type == "plane") {
                             var texture = new THREE.TextureLoader().load('textures/rocks.png');
                             var material = new THREE.MeshBasicMaterial({ map: texture, side: THREE.DoubleSide });
@@ -141,27 +155,27 @@
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
-                        if (command.parameters.type == "true") {
+                        if (command.parameters.type == "stellage") {
                             var geometry = new THREE.BoxGeometry(3, 3, 3);
                             var nodeMaterials = [
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
-                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //LEFT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //RIGHT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //TOP
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //BOTTOM
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //FRONT
+                                new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //BACK
                             ];
                             var material = new THREE.MeshFaceMaterial(nodeMaterials);
-                            var node = new THREE.Mesh(geometry, material);
-                            node.position.y = 0.9;
+                            var stellage = new THREE.Mesh(geometry, material);
+                            stellage.position.y = 0.9;
 
                             var group = new THREE.Group();
-                            group.add(node);
+                            group.add(stellage);
 
                             scene.add(group);
                             worldObjects[command.parameters.uuid] = group;
                         }
-                        if (command.parameters.type == "false") {
+                        if (command.parameters.type == "pathnode") {
                             var geometry = new THREE.BoxGeometry(3, 3, 3);
                             var nodeMaterials = [
                                 new THREE.MeshBasicMaterial({ map: new THREE.TextureLoader().load(""), side: THREE.DoubleSide }), //LEFT

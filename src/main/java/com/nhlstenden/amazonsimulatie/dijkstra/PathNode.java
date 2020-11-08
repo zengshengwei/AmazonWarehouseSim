@@ -72,11 +72,6 @@ public class PathNode implements Object3D, Updatable{
     }
 	@Override
 	public String getType() {
-		if(isStellage == true){
-			return "true";
-		}else{
-		return "false";
-		}
-		//return Node.class.getSimpleName().toLowerCase();
+        return PathNode.class.getSimpleName().toLowerCase();
 	}
 }

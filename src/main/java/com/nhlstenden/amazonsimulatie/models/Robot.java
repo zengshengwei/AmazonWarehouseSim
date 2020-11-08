@@ -3,7 +3,6 @@ package com.nhlstenden.amazonsimulatie.models;
 import com.nhlstenden.amazonsimulatie.dijkstra.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -40,12 +39,15 @@ class Robot implements Object3D, Updatable {
         this.uuid = UUID.randomUUID();
         this.pm = pm;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
         this.task = task;
 
         PathNode n = pm.getNodeList().get(0);
 
-        GoToAdd(n); // drive to origin first to begin 
+        GoToAdd(n); // drive to origin first to begin
     }
 
     /*
@@ -62,12 +64,13 @@ class Robot implements Object3D, Updatable {
      */
     @Override
     public boolean update() {
-        if(child != null) {
+        if (child != null) {
             child.setPos(x, 1.5, z);
         }
 
         calcDeltaTime();
 
+<<<<<<< HEAD
         if(destNodes.size() > 0) {
             PathNode n = destNodes.get(0);
             if(n.x == this.x && n.z == this.z){
@@ -80,11 +83,23 @@ class Robot implements Object3D, Updatable {
                 double startX, startZ;
     
                 double distance = Math.sqrt(Math.pow(n.x - this.x, 2) + Math.pow(n.z - this.z, 2));
+=======
+        if (destNodes.size() > 0) {
+            PathNode n = destNodes.get(0);
+
+            if (n.x != this.x || n.z != this.z) {
+                double speed = 10;
+                double elapsed = 0.01f;
+                double startX, startZ;
+
+                double distance = Math.sqrt(Math.pow(Math.abs(n.x - this.x), 2) + Math.pow(Math.abs(n.z - this.z), 2));
+>>>>>>> main
                 double dirX = (n.x - this.x) / distance;
                 double dirZ = (n.z - this.z) / distance;
                 startX = this.x;
                 startZ = this.z;
                 moving = true;
+<<<<<<< HEAD
     
                 if (moving) {
                     this.x += dirX * speed * elapsed ;
@@ -105,6 +120,31 @@ class Robot implements Object3D, Updatable {
         // if (destX.size() != 0 && destY.size() != 0)
         //     GoToVector2(destX.get(0), destY.get(0));
         DirManager();
+=======
+
+                if (moving) {
+                    this.x += dirX * speed * elapsed * localDeltaTime;
+                    this.z += dirZ * speed * elapsed * localDeltaTime;
+
+                    if (Math.sqrt(Math.pow(Math.abs(this.x - startX), 2) + Math.pow(Math.abs(this.z - startZ), 2)) >= distance) { // arrived at dest
+                        this.x = n.x;
+                        this.z = n.z;
+                        moving = false;
+                    }
+                }
+            }
+            if (n.x == this.x && n.z == this.z) {
+                destNodes.remove(n);
+                curNode = n;
+            }
+            return true;
+        }
+        // if (destX.size() != 0 && destY.size() != 0)
+        // GoToVector2(destX.get(0), destY.get(0));
+        if (destNodes.size() == 0) {
+            DirManager();
+        }
+>>>>>>> main
 
         return true;
     }
@@ -114,6 +154,7 @@ class Robot implements Object3D, Updatable {
     }
 
     public void DirManager() {
+<<<<<<< HEAD
         if(!pickup && child == null){
             int randomStellage = getRandomStellage();
             //geef eindpunt en dan beginpunt mee
@@ -122,27 +163,50 @@ class Robot implements Object3D, Updatable {
                 for (PathNode n : path) {
                     if (n != curNode){
                         GoToAdd(n);
+=======
+        if (!pickup && child == null) { // on way to stellage
+
+            for (PathNode pathNode : pm.getNodeList()) {
+                if (pathNode.getIsStellage()) {
+                    if (this.task) {
+                        if (pathNode.stellage != null) {
+                            ArrayList<PathNode> path = pm.GetPath(this.curNode, pathNode); // geef huidige node mee en de target node
+                            for (PathNode n : path) {
+                                if (n != curNode) {
+                                    GoToAdd(n);
+                                }
+                            }
+                        }
+                    } else {
+                        if (pathNode.stellage == null) {
+                            ArrayList<PathNode> path = pm.GetPath(this.curNode, pathNode); // geef huidige node mee en de target node
+                            for (PathNode n : path) {
+                                if (n != curNode) {
+                                    GoToAdd(n);
+                                }
+                            }
+                        }
+>>>>>>> main
                     }
                 }
             }
             pickup = true;
-        }else{
-            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size()-1)); // geef huidige node mee en de target node
-            if(path != null){
-                for (PathNode n : path) {
-                    if (n != curNode){
-                        GoToAdd(n);
-                    }
+
+        } else if (pickup) {
+            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size() - 1)); // geef huidige node mee en de target node
+            for (PathNode n : path) {
+                if (n != curNode) {
+                    GoToAdd(n);
                 }
             }
             pickup = false;
         }
     }
 
-    public int getRandomStellage(){
+    public int getRandomStellage() {
         ArrayList<Integer> stellageIndex = new ArrayList<Integer>();
-        for(PathNode n : pm.getNodeList()){
-            if(n.getIsStellage()){
+        for (PathNode n : pm.getNodeList()) {
+            if (n.getIsStellage()) {
                 int e = pm.getNodeList().indexOf(n);
                 stellageIndex.add(e);
             }
@@ -154,17 +218,12 @@ class Robot implements Object3D, Updatable {
         return value;
     }
 
-    public void GoToAdd(int x, int y) {
-        destX.add(x);
-        destY.add(y);
-    }
-
     public void GoToAdd(PathNode n) {
         destNodes.add(n);
     }
 
     public void GoToVector2(PathNode n) {
-        if(n.x != this.x || n.z != this.x){
+        if (n.x != this.x || n.z != this.x) {
             double speed = 10;
             double elapsed = 0.01f;
             double startX, startZ;
@@ -179,9 +238,12 @@ class Robot implements Object3D, Updatable {
             while (moving) {
                 this.x += dirX * speed * elapsed * localDeltaTime;
                 this.z += dirZ * speed * elapsed * localDeltaTime;
-                
 
+<<<<<<< HEAD
                 if (Math.sqrt(Math.pow(Math.abs(this.x - startX), 2) + Math.pow(Math.abs(this.z - startZ), 2)) >= distance) {
+=======
+                if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) { // arrived at dest
+>>>>>>> main
                     this.x = n.x;
                     this.z = n.z;
                     moving = false;
@@ -192,42 +254,17 @@ class Robot implements Object3D, Updatable {
         curNode = n;
     }
 
-    public void GoToVector2(double x, double z) {
-        double speed = 250;
-        double elapsed = 0.01f;
-        double startX, startZ;
 
-        double distance = Math.sqrt(Math.pow(x - this.x, 2) + Math.pow(z - this.z, 2));
-        double dirX = (x - this.x) / distance;
-        double dirZ = (z - this.z) / distance;
-        startX = this.x;
-        startZ = this.z;
-        moving = true;
-
-        if (moving == true) {
-            this.x += dirX * speed * elapsed * localDeltaTime;
-            this.z += dirZ * speed * elapsed * localDeltaTime;
-
-            if (Math.sqrt(Math.pow(this.x - startX, 2) + Math.pow(this.z - startZ, 2)) >= distance) {
-                this.x = x;
-                this.z = z;
-                moving = false;
-                destX.remove(0);
-                destY.remove(0);
-            }
-        }
-    }
-
-    public void PickUpStellage(Node n){
-        if(n.getIsStellage() && n.stellage != null){
+    public void PickUpStellage(Node n) {
+        if (n.getIsStellage() && n.stellage != null) {
             child = n.stellage;
             n.stellage = null;
         }
 
     }
 
-    public void DropStellage(Node n){
-        if(n.getIsStellage() && n.stellage == null && child != null){
+    public void DropStellage(Node n) {
+        if (n.getIsStellage() && n.stellage == null && child != null) {
             n.stellage = child;
             child = null;
         }
