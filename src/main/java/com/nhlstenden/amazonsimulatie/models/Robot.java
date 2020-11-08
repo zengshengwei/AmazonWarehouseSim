@@ -114,6 +114,14 @@ public class Robot implements Object3D, Updatable {
         return true;
     }
 
+    public ArrayList<PathNode> getDestNodes() {
+        return destNodes;
+    }
+
+    public Stellage getChild() {
+        return child;
+    }
+
     public void pickUp(Stellage child) {
         this.child = child;
     }

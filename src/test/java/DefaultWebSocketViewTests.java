@@ -24,13 +24,60 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 
 public class DefaultWebSocketViewTests {
+    @Test
+    public void testGetEmptyStellage() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+        pm.CreateNodes(5, 5, nodeList);
+        Robot r = new Robot(pm, true);
 
-    /**
-     * De code hieronder is een voorbeeld van een test in Java. Je schrijf per class die je wilt testen
-     * een testclass zoals deze. Daarin zet je al je testfuncties. Vaak schrijf je per methode (of functie)
-     * die je wilt testen een methode zoals deze hieronder. Kijk in de methode naar de genummerde comments.
-     * Om de test het beste te begrijpen, begin je vanaf comment #1.
-     */
+        final int actual = r.getEmptyStellage();
+        assertTrue(actual != 0);
+    }
+
+    @Test
+    public void testGetRandomStellage() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+        pm.CreateNodes(5, 5, nodeList);
+        Robot r = new Robot(pm, true);
+
+        final int actual = r.getRandomStellage();
+        assertTrue(nodeList.get(actual).getIsStellage());
+    }
+
+    @Test
+    public void testGoToAdd(){
+        NodePathManager pm = new NodePathManager();
+        Robot r = new Robot(pm, true);
+
+        PathNode pn = new PathNode();
+        r.GoToAdd(pn);
+
+        assertTrue(r.getDestNodes().size() > 0);
+    }
+
+    @Test
+    public void testPickUp() {
+        NodePathManager pm = new NodePathManager();
+        Robot r = new Robot(pm, true);
+
+        Stellage s = new Stellage();
+        r.pickUp(s);
+        assertTrue(r.getChild() != null);
+    }
+
+    @Test
+    public void testGetType() {
+        NodePathManager pm = new NodePathManager();
+        Robot r = new Robot(pm, true);
+
+        final String expected = "robot";
+        final String actual = r.getType();
+
+        assertSame(expected, actual);
+    }
+
     @Test
     public void testGetDistance(){
         NodePathManager pm = new NodePathManager();
