@@ -132,13 +132,17 @@ public class Robot implements Object3D, Updatable {
                     }
                 }
                 // set stellage false
+                if(child != null)
+                    DropOffStellage();
                 pickedUp = true;
                 pickup = false;
 
             } else if (!pickup) {
                 if(pickedUp){
-                    setStellageEmpty(randomStellage);
-                    pickedUp = false;
+                    PathNode n = pm.getNodeList().get(randomStellage);
+                    PickUpStellage(n);
+                    //setStellageEmpty(randomStellage);
+                    //pickedUp = false;
                 }
                 ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size() - 1)); // geef huidige node mee en de target node
                 for (PathNode n : path) {
@@ -163,14 +167,18 @@ public class Robot implements Object3D, Updatable {
                             }
                         }
                     }
+                    if(child == null)
+                        PickUpNewStellage();
                     putDown = true;
                     pickup = true;
                 }
 
             } else if (pickup) {
                 if(putDown){
-                    setStellageEmpty(getEmptyStellage);
-                    putDown = false;
+                    PathNode n = pm.getNodeList().get(getEmptyStellage);
+                    DropStellage(n);
+                    //setStellageEmpty(getEmptyStellage);
+                    //putDown = false;
                 }
                 ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size() - 1)); // geef huidige node mee en de target node
                 for (PathNode n : path) {
@@ -183,22 +191,20 @@ public class Robot implements Object3D, Updatable {
         }
     }
 
-    public void setStellageEmpty(int index){
-        PathNode n = pm.getNodeList().get(index);
-        Stellage e = n.getStellage();
-        e.setIsEmpty();
-    }
+    // public void setStellageEmpty(int index){
+    //     PathNode n = pm.getNodeList().get(index);
+    //     Stellage e = n.getStellage();
+    //     e.setIsEmpty();
+    // }
 
     public int getEmptyStellage(){
         ArrayList<Integer> stellageIndex = new ArrayList<Integer>();
         for(PathNode n : pm.getNodeList()){
             if(n.getIsStellage()){
-                Stellage e = n.getStellage();
-                if(e.isEmpty){
+                if(n.getStellage() == null){
                     int indexStellage = pm.getNodeList().indexOf(n);
-                    stellageIndex.add(indexStellage);
+                    stellageIndex.add(indexStellage);                
                 }
-                
             }
         }
         if(stellageIndex.size() > 0){
@@ -230,36 +236,8 @@ public class Robot implements Object3D, Updatable {
         destNodes.add(n);
     }
 
-    public void GoToVector2(PathNode n) {
-        if (n.x != this.x || n.z != this.x) {
-            double speed = 10;
-            double elapsed = 0.01f;
-            double startX, startZ;
 
-            double distance = Math.sqrt(Math.pow(n.x - this.x, 2) + Math.pow(n.z - this.z, 2));
-            double dirX = (n.x - this.x) / distance;
-            double dirZ = (n.z - this.z) / distance;
-            startX = this.x;
-            startZ = this.z;
-            moving = true;
-
-            while (moving) {
-                this.x += dirX * speed * elapsed * localDeltaTime;
-                this.z += dirZ * speed * elapsed * localDeltaTime;
-
-                if (Math.sqrt(Math.pow(Math.abs(this.x - startX), 2) + Math.pow(Math.abs(this.z - startZ), 2)) >= distance) {
-                    this.x = n.x;
-                    this.z = n.z;
-                    moving = false;
-                }
-            }
-        }
-        destNodes.remove(n);
-        curNode = n;
-    }
-
-
-    public void PickUpStellage(Node n) {
+    public void PickUpStellage(PathNode n) {
         if (n.getIsStellage() && n.stellage != null) {
             child = n.stellage;
             n.stellage = null;
@@ -267,11 +245,19 @@ public class Robot implements Object3D, Updatable {
 
     }
 
-    public void DropStellage(Node n) {
+    public void DropStellage(PathNode n) {
         if (n.getIsStellage() && n.stellage == null && child != null) {
             n.stellage = child;
             child = null;
         }
+    }
+
+    public void PickUpNewStellage(){
+        child = new Stellage();
+    }
+
+    public void DropOffStellage() {
+        child = null;
     }
 
     public void calcDeltaTime() {
