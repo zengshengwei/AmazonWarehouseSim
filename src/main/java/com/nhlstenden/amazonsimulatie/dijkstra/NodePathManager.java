@@ -56,13 +56,15 @@ public class NodePathManager {
 				else if (n.x < gridsizeX * mult - mult && n.z < gridsizeZ * mult - mult) {
 					if(!n.getIsStellage() && !nodelist.get(index + 1).getIsStellage()) {
 						n.adjacencies.add(nodelist.get(index + 1)); // get right
-					} 
-					n.adjacencies.add(nodelist.get(index + gridsizeX)); // get bottom
+                    } 
+                    if(!nodelist.get(index + gridsizeX).getIsStellage()){
+                        n.adjacencies.add(nodelist.get(index + gridsizeX)); // get bottom
+                    }
 					
 					if (n.x > 0 && !nodelist.get(index + 1).getIsStellage()) { // if there is node to the left
 						n.adjacencies.add(nodelist.get(index - 1)); // get left 
 					}
-					if (n.z > 0) { // if there is node up top
+					if (n.z > 0 && !n.getIsStellage()) { // if there is node up top
 						n.adjacencies.add(nodelist.get(index - gridsizeX)); // get top
 					}
 
