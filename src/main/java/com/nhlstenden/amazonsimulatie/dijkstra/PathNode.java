@@ -28,6 +28,10 @@ public class PathNode implements Object3D, Updatable{
         stellage = s;
     }
 
+    public Stellage getStellage(){
+        return stellage;
+    }
+
 	public void setIsStellage(boolean b) {
 		isStellage = b;
 	}

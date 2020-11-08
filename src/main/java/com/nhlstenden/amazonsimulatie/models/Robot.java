@@ -2,6 +2,8 @@ package com.nhlstenden.amazonsimulatie.models;
 
 import com.nhlstenden.amazonsimulatie.dijkstra.*;
 
+import org.w3c.dom.NodeList;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
@@ -28,6 +30,11 @@ class Robot implements Object3D, Updatable {
     private Stellage child;
     private boolean pickup = true;
     private boolean task = false;
+    private boolean pickedUp;
+    private boolean putDown;
+    private int randomStellage;
+    private int getEmptyStellage;
+
 
     private PathNode curNode;
     private ArrayList<PathNode> destNodes = new ArrayList<PathNode>();
@@ -112,28 +119,96 @@ class Robot implements Object3D, Updatable {
     }
 
     public void DirManager() {
-        if(!pickup && child == null){
-            int randomStellage = getRandomStellage();
-            //geef eindpunt en dan beginpunt mee
-            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(randomStellage)); // geef huidige node mee en de target node
-            if(path != null){
+        if(task){
+            if(pickup){
+                randomStellage = getRandomStellage();
+                //geef eindpunt en dan beginpunt mee
+                ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(randomStellage)); // geef huidige node mee en de target node
+                if(path != null){
+                    for (PathNode n : path) {
+                        if (n != curNode){
+                            GoToAdd(n);
+                        }
+                    }
+                }
+                // set stellage false
+                pickedUp = true;
+                pickup = false;
+
+            } else if (!pickup) {
+                if(pickedUp){
+                    setStellageEmpty(randomStellage);
+                    pickedUp = false;
+                }
+                ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size() - 1)); // geef huidige node mee en de target node
                 for (PathNode n : path) {
-                    if (n != curNode){
+                    if (n != curNode) {
                         GoToAdd(n);
                     }
                 }
+                pickup = true;
             }
-            pickup = true;
-
-        } else if (pickup) {
-            ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size() - 1)); // geef huidige node mee en de target node
-            for (PathNode n : path) {
-                if (n != curNode) {
-                    GoToAdd(n);
+        }else
+        {
+            if(!pickup){
+                // zoek naar een lege stellage
+                getEmptyStellage = getEmptyStellage();
+                if(getEmptyStellage != 0){
+                    // //geef eindpunt en dan beginpunt mee
+                    ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(getEmptyStellage)); // geef huidige node mee en de target node
+                    if(path != null){
+                        for (PathNode n : path) {
+                            if (n != curNode){
+                                GoToAdd(n);
+                            }
+                        }
+                    }
+                    putDown = true;
+                    pickup = true;
                 }
-            }
-            pickup = false;
+
+            } else if (pickup) {
+                if(putDown){
+                    setStellageEmpty(getEmptyStellage);
+                    putDown = false;
+                }
+                ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size() - 1)); // geef huidige node mee en de target node
+                for (PathNode n : path) {
+                    if (n != curNode) {
+                        GoToAdd(n);
+                    }
+                }
+                pickup = false;
+            } 
         }
+    }
+
+    public void setStellageEmpty(int index){
+        PathNode n = pm.getNodeList().get(index);
+        Stellage e = n.getStellage();
+        e.setIsEmpty();
+    }
+
+    public int getEmptyStellage(){
+        ArrayList<Integer> stellageIndex = new ArrayList<Integer>();
+        for(PathNode n : pm.getNodeList()){
+            if(n.getIsStellage()){
+                Stellage e = n.getStellage();
+                if(e.isEmpty){
+                    int indexStellage = pm.getNodeList().indexOf(n);
+                    stellageIndex.add(indexStellage);
+                }
+                
+            }
+        }
+        if(stellageIndex.size() > 0){
+            Random r = new Random();
+            int randIndex = r.nextInt(stellageIndex.size());
+            int value = stellageIndex.get(randIndex).intValue();
+
+            return value;
+        }
+        return 0;
     }
 
     public int getRandomStellage() {
