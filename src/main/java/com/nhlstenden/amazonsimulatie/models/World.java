@@ -36,22 +36,20 @@ public class World implements Model {
     public World() {
         this.worldObjects = new ArrayList<>();
         pm = new NodePathManager();
-        CreateGrid(10, 10, 10);
+        //CreateGrid(10, 10, 10);
 
         pm.CreateNodes(6, 9, nodeList);
         pm.assignEdges(nodeList);
 
         // robots krijgen een PathManager mee
         this.worldObjects.add(new Robot(pm, true));
-        this.worldObjects.add(new Truck());
+        // truck krijgt geen PathManager mee
+        //this.worldObjects.add(new Truck());
 
         for(int i = 0; i < pm.getNodeList().size(); i++) {
             if(pm.getNodeList().get(i).getIsStellage()) {
                 Stellage s = new Stellage();
                 pm.getNodeList().get(i).addStellage(s);
-                s.x = pm.getNodeList().get(i).getX();
-                s.z = pm.getNodeList().get(i).getZ();
-                s.y = pm.getNodeList().get(i).getY();
                 this.worldObjects.add(s);
             }
         }
@@ -61,26 +59,26 @@ public class World implements Model {
         }
     }
 
-    public void CreateGrid(int width, int height, int tilesize) {
-        for(int w = 0; w < width; w++) {
-            for(int h = 0; h < height; h++) {
-                boolean isdark = false;
-                if(h % 2 == 0) {
-                    if(w % 2 == 2) 
-                        isdark = true;
-                    else
-                        isdark = false;
-                }else {
-                    if(h % 2 == 0)
-                        isdark = false;
-                    else
-                        isdark = true;
-                }
+    // public void CreateGrid(int width, int height, int tilesize) {
+    //     for(int w = 0; w < width; w++) {
+    //         for(int h = 0; h < height; h++) {
+    //             boolean isdark = false;
+    //             if(h % 2 == 0) {
+    //                 if(w % 2 == 2) 
+    //                     isdark = true;
+    //                 else
+    //                     isdark = false;
+    //             }else {
+    //                 if(h % 2 == 0)
+    //                     isdark = false;
+    //                 else
+    //                     isdark = true;
+    //             }
 
-                this.worldObjects.add(new Plane(w * tilesize, h * tilesize, tilesize, isdark));
-            }
-        }
-    }
+    //             this.worldObjects.add(new Plane(w * tilesize, h * tilesize, tilesize, isdark));
+    //         }
+    //     }
+    // }
 
     // Hier moet een grid met nodes komen. Die wordt doorgestuurd
     // naar de robots.

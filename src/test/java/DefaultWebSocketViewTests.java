@@ -3,6 +3,7 @@
 import com.nhlstenden.amazonsimulatie.models.Model;
 import com.nhlstenden.amazonsimulatie.models.Object3D;
 import com.nhlstenden.amazonsimulatie.views.DefaultWebSocketView;
+import com.nhlstenden.amazonsimulatie.dijkstra.NodePathManager;
 
 import org.junit.Test;
 import org.mockito.invocation.InvocationOnMock;
@@ -25,7 +26,9 @@ public class DefaultWebSocketViewTests {
      * die je wilt testen een methode zoals deze hieronder. Kijk in de methode naar de genummerde comments.
      * Om de test het beste te begrijpen, begin je vanaf comment #1.
      */
-	@Test
+    @Test
+
+    }
 	public void testUpdateSignal() throws Exception {
         /**
          * Comment #2
