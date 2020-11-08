@@ -17,15 +17,15 @@ public class Stellage implements Object3D, Updatable {
         return isEmpty;
     }
 
-    public void setIsEmpty(){
-        if(isEmpty){
-            y += 10;
-            isEmpty = false;
-        }else{
-            y -= 10;
-            isEmpty = true;
-        }
-    }
+    // public void setIsEmpty(){
+    //     if(isEmpty){
+    //         y += 10;
+    //         isEmpty = false;
+    //     }else{
+    //         y -= 10;
+    //         isEmpty = true;
+    //     }
+    // }
 
     @Override
     public boolean update() {

@@ -39,7 +39,9 @@ public class NodePathManager {
 		PathNode last = new PathNode();
 		nodeList.add(last);
 		last.x = 0;
-		last.z = z * mult;
+        last.z = z * mult;
+        last.isTruck = true;
+        last.setIsStellage(true);
 	}
 
 	public void assignEdges(ArrayList<PathNode> nodelist) {

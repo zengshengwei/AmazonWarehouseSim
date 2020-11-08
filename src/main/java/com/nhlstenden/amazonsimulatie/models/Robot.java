@@ -35,7 +35,6 @@ public class Robot implements Object3D, Updatable {
     private int randomStellage;
     private int getEmptyStellage;
 
-
     private PathNode curNode;
     private ArrayList<PathNode> destNodes = new ArrayList<PathNode>();
 
@@ -132,8 +131,10 @@ public class Robot implements Object3D, Updatable {
                     }
                 }
                 // set stellage false
-                if(child != null)
-                    DropOffStellage();
+                if(child != null){
+                    PathNode n = pm.getNodeList().get(pm.getNodeList().size() - 1);
+                    DropOffStellage(n);
+                }
                 pickedUp = true;
                 pickup = false;
 
@@ -141,8 +142,6 @@ public class Robot implements Object3D, Updatable {
                 if(pickedUp){
                     PathNode n = pm.getNodeList().get(randomStellage);
                     PickUpStellage(n);
-                    //setStellageEmpty(randomStellage);
-                    //pickedUp = false;
                 }
                 ArrayList<PathNode> path = pm.GetPath(this.curNode, pm.getNodeList().get(pm.getNodeList().size() - 1)); // geef huidige node mee en de target node
                 for (PathNode n : path) {
@@ -167,8 +166,10 @@ public class Robot implements Object3D, Updatable {
                             }
                         }
                     }
-                    if(child == null)
-                        PickUpNewStellage();
+                    if(child == null){
+                        PathNode n = pm.getNodeList().get(pm.getNodeList().size()-1);
+                        PickUpStellage(n);
+                    }
                     putDown = true;
                     pickup = true;
                 }
@@ -176,7 +177,7 @@ public class Robot implements Object3D, Updatable {
             } else if (pickup) {
                 if(putDown){
                     PathNode n = pm.getNodeList().get(getEmptyStellage);
-                    DropStellage(n);
+                    DropOffStellage(n);
                     //setStellageEmpty(getEmptyStellage);
                     //putDown = false;
                 }
@@ -191,17 +192,11 @@ public class Robot implements Object3D, Updatable {
         }
     }
 
-    // public void setStellageEmpty(int index){
-    //     PathNode n = pm.getNodeList().get(index);
-    //     Stellage e = n.getStellage();
-    //     e.setIsEmpty();
-    // }
-
     public int getEmptyStellage(){
         ArrayList<Integer> stellageIndex = new ArrayList<Integer>();
         for(PathNode n : pm.getNodeList()){
             if(n.getIsStellage()){
-                if(n.getStellage() == null){
+                if(n.stellages.size() == 0){
                     int indexStellage = pm.getNodeList().indexOf(n);
                     stellageIndex.add(indexStellage);                
                 }
@@ -238,25 +233,16 @@ public class Robot implements Object3D, Updatable {
 
 
     public void PickUpStellage(PathNode n) {
-        if (n.getIsStellage() && n.stellage != null) {
-            child = n.stellage;
-            n.stellage = null;
+        if (n.getIsStellage() && n.stellages.size() > 0) {
+            child = n.getStellage();
+            n.stellages.remove(0);
         }
 
     }
 
-    public void DropStellage(PathNode n) {
-        if (n.getIsStellage() && n.stellage == null && child != null) {
-            n.stellage = child;
-            child = null;
-        }
-    }
-
-    public void PickUpNewStellage(){
-        child = new Stellage();
-    }
-
-    public void DropOffStellage() {
+    public void DropOffStellage(PathNode n) {
+        n.stellages.add(child);
+        child.setPos(x, 0, z);
         child = null;
     }
 

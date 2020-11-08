@@ -20,7 +20,7 @@ public class World implements Model {
      * Deze objecten moeten uiteindelijk ook in de lijst passen (overerving). Daarom is dit
      * een lijst van Object3D onderdelen. Deze kunnen in principe alles zijn. (Robots, vrachrtwagens, etc)
      */
-    private List<Object3D> worldObjects;
+    public List<Object3D> worldObjects;
     NodePathManager pm;
 
     /*
@@ -43,6 +43,7 @@ public class World implements Model {
 
         // robots krijgen een PathManager mee
         this.worldObjects.add(new Robot(pm, true));
+        this.worldObjects.add(new Robot(pm, false));
         // truck krijgt geen PathManager mee
         //this.worldObjects.add(new Truck());
 
@@ -50,6 +51,7 @@ public class World implements Model {
             if(pm.getNodeList().get(i).getIsStellage()) {
                 Stellage s = new Stellage();
                 pm.getNodeList().get(i).addStellage(s);
+                s.setPos(pm.getNodeList().get(i).getX(), pm.getNodeList().get(i).getY(), pm.getNodeList().get(i).getZ());
                 this.worldObjects.add(s);
             }
         }

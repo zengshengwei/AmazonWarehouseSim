@@ -6,9 +6,9 @@ public class PathNode implements Object3D, Updatable{
 	private UUID uuid;
     public double x,y,z, rotationX, rotationY, rotationZ;
     public ArrayList<PathNode> adjacencies = new ArrayList<PathNode>();
-
+    public boolean isTruck = false;
     private boolean isStellage = false;
-	public Stellage stellage = null;
+	public ArrayList<Stellage> stellages = new ArrayList<Stellage>();
 
 
     public PathNode(){
@@ -25,11 +25,11 @@ public class PathNode implements Object3D, Updatable{
     }
     
     public void addStellage(Stellage s) {
-        stellage = s;
+        stellages.add(s);
     }
 
     public Stellage getStellage(){
-        return stellage;
+        return stellages.get(0);
     }
 
 	public void setIsStellage(boolean b) {
