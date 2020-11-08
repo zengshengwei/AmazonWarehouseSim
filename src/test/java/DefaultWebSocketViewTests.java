@@ -49,6 +49,8 @@ public class DefaultWebSocketViewTests {
     @Test
     public void testGoToAdd(){
         NodePathManager pm = new NodePathManager();
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        pm.CreateNodes(5, 5, nodeList);
         Robot r = new Robot(pm, true);
 
         PathNode pn = new PathNode();
@@ -60,6 +62,8 @@ public class DefaultWebSocketViewTests {
     @Test
     public void testPickUp() {
         NodePathManager pm = new NodePathManager();
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        pm.CreateNodes(5, 5, nodeList);
         Robot r = new Robot(pm, true);
 
         Stellage s = new Stellage();
@@ -68,14 +72,16 @@ public class DefaultWebSocketViewTests {
     }
 
     @Test
-    public void testGetType() {
+    public void testGetType() { //this test is correct but doesnt work for some reason. if you debug you'll see that expected = "robot" and actual = "robot"
         NodePathManager pm = new NodePathManager();
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        pm.CreateNodes(5, 5, nodeList);
         Robot r = new Robot(pm, true);
 
         final String expected = "robot";
         final String actual = r.getType();
 
-        assertSame(expected, actual);
+        assertTrue(expected == actual);
     }
 
     @Test
@@ -91,7 +97,7 @@ public class DefaultWebSocketViewTests {
         b.z = 0;
         final float actual = pm.getDistance(a,b);
         final float expected = 10.0f;
-        assertSame(expected, actual);
+        assertTrue(expected == actual);
     }
 
     public void testCreateNodes() {
