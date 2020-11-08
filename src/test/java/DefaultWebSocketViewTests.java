@@ -21,6 +21,8 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+
 public class DefaultWebSocketViewTests {
 
     /**
@@ -30,20 +32,66 @@ public class DefaultWebSocketViewTests {
      * Om de test het beste te begrijpen, begin je vanaf comment #1.
      */
     @Test
-    public void testgetDistance(){
+    public void testGetDistance(){
         NodePathManager pm = new NodePathManager();
-        Pathnode a = new Pathnode();
-        Pathnode b = new Pathnode();
+        PathNode a = new PathNode();
+        PathNode b = new PathNode();
         a.x = 0;
         a.y = 0;
         a.z = 0;
         b.x = 10;
         b.y = 0;
         b.z = 0;
-        final float distance = pm.getDistance(a,b);
+        final float actual = pm.getDistance(a,b);
         final float expected = 10.0f;
-        assertSame(distance, expected);
+        assertSame(expected, actual);
     }
+
+    public void testCreateNodes() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+
+        pm.CreateNodes(5, 5, nodeList);
+
+        final int actual = nodeList.size();
+        final int expected = 26; // (5 * 5) + 1
+
+        assertSame(expected, actual);
+    }
+
+    @Test
+    public void testAssignEdges() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+
+        pm.CreateNodes(5, 5, nodeList);
+        pm.assignEdges(nodeList);
+
+        Boolean allhaveadj = true;
+
+        for(PathNode n : nodeList) {
+            if(n.adjacencies.size() < 1) {
+                allhaveadj = false;
+            }
+        }
+
+        assertSame(true, allhaveadj);
+    }
+
+    @Test
+    public void testGetPath() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+
+        pm.CreateNodes(5, 5, nodeList);
+        pm.assignEdges(nodeList);
+
+        final int expected = 5;
+        final int actual = pm.GetPath(nodeList.get(0), nodeList.get(4)).size();
+        
+        assertSame(expected, actual);
+    }
+
 	public void testUpdateSignal() throws Exception {
         /**
          * Comment #2
