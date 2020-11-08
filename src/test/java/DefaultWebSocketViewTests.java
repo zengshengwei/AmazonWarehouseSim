@@ -21,29 +21,124 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DefaultWebSocketViewTests {
+import java.util.ArrayList;
 
-    /**
-     * De code hieronder is een voorbeeld van een test in Java. Je schrijf per class die je wilt testen
-     * een testclass zoals deze. Daarin zet je al je testfuncties. Vaak schrijf je per methode (of functie)
-     * die je wilt testen een methode zoals deze hieronder. Kijk in de methode naar de genummerde comments.
-     * Om de test het beste te begrijpen, begin je vanaf comment #1.
-     */
+public class DefaultWebSocketViewTests {
     @Test
-    // public void testgetDistance(){
-    //     NodePathManager pm = new NodePathManager();
-    //     Pathnode a = new Pathnode();
-    //     Pathnode b = new Pathnode();
-    //     a.x = 0;
-    //     a.y = 0;
-    //     a.z = 0;
-    //     b.x = 10;
-    //     b.y = 0;
-    //     b.z = 0;
-    //     final float distance = pm.getDistance(a,b);
-    //     final float expected = 10.0f;
-    //     assertSame(distance, expected);
-    // }
+    public void testGetEmptyStellage() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+        pm.CreateNodes(5, 5, nodeList);
+        Robot r = new Robot(pm, true);
+
+        final int actual = r.getEmptyStellage();
+        assertTrue(actual != 0);
+    }
+
+    @Test
+    public void testGetRandomStellage() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+        pm.CreateNodes(5, 5, nodeList);
+        Robot r = new Robot(pm, true);
+
+        final int actual = r.getRandomStellage();
+        assertTrue(nodeList.get(actual).getIsStellage());
+    }
+
+    @Test
+    public void testGoToAdd(){
+        NodePathManager pm = new NodePathManager();
+        Robot r = new Robot(pm, true);
+
+        PathNode pn = new PathNode();
+        r.GoToAdd(pn);
+
+        assertTrue(r.getDestNodes().size() > 0);
+    }
+
+    @Test
+    public void testPickUp() {
+        NodePathManager pm = new NodePathManager();
+        Robot r = new Robot(pm, true);
+
+        Stellage s = new Stellage();
+        r.pickUp(s);
+        assertTrue(r.getChild() != null);
+    }
+
+    @Test
+    public void testGetType() {
+        NodePathManager pm = new NodePathManager();
+        Robot r = new Robot(pm, true);
+
+        final String expected = "robot";
+        final String actual = r.getType();
+
+        assertSame(expected, actual);
+    }
+
+    @Test
+    public void testGetDistance(){
+        NodePathManager pm = new NodePathManager();
+        PathNode a = new PathNode();
+        PathNode b = new PathNode();
+        a.x = 0;
+        a.y = 0;
+        a.z = 0;
+        b.x = 10;
+        b.y = 0;
+        b.z = 0;
+        final float actual = pm.getDistance(a,b);
+        final float expected = 10.0f;
+        assertSame(expected, actual);
+    }
+
+    public void testCreateNodes() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+
+        pm.CreateNodes(5, 5, nodeList);
+
+        final int actual = nodeList.size();
+        final int expected = 26; // (5 * 5) + 1
+
+        assertSame(expected, actual);
+    }
+
+    @Test
+    public void testAssignEdges() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+
+        pm.CreateNodes(5, 5, nodeList);
+        pm.assignEdges(nodeList);
+
+        Boolean allhaveadj = true;
+
+        for(PathNode n : nodeList) {
+            if(n.adjacencies.size() < 1) {
+                allhaveadj = false;
+            }
+        }
+
+        assertSame(true, allhaveadj);
+    }
+
+    @Test
+    public void testGetPath() {
+        ArrayList<PathNode> nodeList = new ArrayList<PathNode>();
+        NodePathManager pm = new NodePathManager();
+
+        pm.CreateNodes(5, 5, nodeList);
+        pm.assignEdges(nodeList);
+
+        final int expected = 5;
+        final int actual = pm.GetPath(nodeList.get(0), nodeList.get(4)).size();
+        
+        assertSame(expected, actual);
+    }
+
 	public void testUpdateSignal() throws Exception {
         /**
          * Comment #2
